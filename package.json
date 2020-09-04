@@ -2,6 +2,8 @@
   "name": "soul-music",
   "version": "0.1.0",
   "private": true,
+  "main": "src/Main.js",
+  "homepage": "/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -14,7 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron-start": "electron ."
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -32,6 +35,8 @@
     ]
   },
   "devDependencies": {
+    "electron": "^10.1.1",
+    "electron-builder": "^22.8.0",
     "node-sass": "^4.14.1",
     "react-router-dom": "^5.2.0"
   }
