@@ -3,6 +3,8 @@ import { NavLink } from 'react-router-dom'
 import { ROUTES } from '../../../global/jsx/'
 import './index.sass'
 
+import IconButton from '../icon-button'
+
 const Header = ( ) => {
   //space indicator
   const [ space, setSpace ] = useState( 'Canciones' )
@@ -44,7 +46,7 @@ const Header = ( ) => {
             <ul className = 'sections'>
               { sections.map(( option, i ) => (
                 option.name === space ?
-                <Fragment />
+                <Fragment key = { i }/>
                 :
                 <li key = { i } className = 'section.options'>
                   <NavLink to = { option.route } onClick = { ( ) => setSpace( option.name ) }>{ option.name }</NavLink>
@@ -53,6 +55,12 @@ const Header = ( ) => {
             </ul>
             :
             null }
+        </div>
+      </div>
+      <div className = 'section-search'>
+        <div className = 'search-bar'>
+          <input type = 'text' name = 'input-search' className = 'input-search'/>
+          <IconButton/>
         </div>
       </div>
     </div>
