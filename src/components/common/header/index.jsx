@@ -41,21 +41,19 @@ const Header = ( ) => {
     <div className = 'header'>
       <div className = 'section-select'>
         <span className = 'space'>{ space }</span>
-        <div className = 'choose-space'>
-          { sections ?
-            <ul className = 'sections'>
-              { sections.map(( option, i ) => (
-                option.name === space ?
-                <Fragment key = { i }/>
-                :
-                <li key = { i } className = 'section.options'>
-                  <NavLink to = { option.route } onClick = { ( ) => setSpace( option.name ) }>{ option.name }</NavLink>
-                </li>
-              )) }
-            </ul>
-            :
-            null }
-        </div>
+        { sections ?
+          <ul className = 'sections'>
+            { sections.map(( option, i ) => (
+              option.name === space ?
+              <Fragment key = { i }/>
+              :
+              <li key = { i } className = 'section-options'>
+                <NavLink to = { option.route } onClick = { ( ) => setSpace( option.name ) }>{ option.name }</NavLink>
+              </li>
+            )) }
+          </ul>
+          :
+          null }
       </div>
       <div className = 'section-search'>
         <div className = 'search-bar'>

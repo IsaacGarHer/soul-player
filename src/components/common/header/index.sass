@@ -1,0 +1,39 @@
+.header
+  width: 100%
+  max-width: 100%
+  height: 7vh
+  min-height: 30px
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: space-around
+  .section-select
+    height: fit-content
+    position: relative
+    &:hover
+      .sections
+        visibility: visible
+        opacity: 1
+    .space
+      font-size: 1.3em
+      font-family: 'Quicksand'
+    .sections
+      list-style: none
+      display: flex
+      flex-direction: column
+      justify-content: space-between
+      margin: 0
+      padding: 0
+      visibility: hidden
+      position: absolute
+      top: 100%
+      left: 0%
+      width: 100%
+      height: 60px
+      background: #444
+      opacity: 0
+      transition: 0.15s ease-in
+      .section-options
+        a
+          text-decoration: none
+          color: #fff

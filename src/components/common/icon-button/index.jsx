@@ -9,7 +9,10 @@ const IconButton = pr => (
     onClick = { ( ) => pr.action ? pr.action : console.log( 'image-button' ) }
     id = { pr.id ? pr.id : null }
     name = { pr.name ? pr.name : null }>
-    <img src = { pr.image ? pr.image : cancel } alt = { pr.alt ? pr.alt : 'cancel' }/>
+    <img
+      className = 'icon'
+      src = { pr.image ? pr.image : cancel }
+      alt = { pr.alt ? pr.alt : 'cancel' }/>
   </button>
 )
 
