@@ -60,7 +60,10 @@ const Header = ( ) => {
       <div className = 'section-search'>
         <div className = 'search-bar'>
           <input type = 'text' name = 'input-search' className = 'input-search'/>
-          <IconButton icon = { search }/>
+          <IconButton icon = { search } />
+          {/*<div className = 'answers-container'>
+            //div for future update
+          </div>*/}
         </div>
       </div>
     </div>

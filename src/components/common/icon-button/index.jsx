@@ -5,8 +5,8 @@ import cancel from '../../../resources/icons/cancel-not-using-in-final-version.s
 
 const IconButton = pr => (
   <button
-    className = {`icon-button${ pr.className ? ` ${pr.className}` : '' }`}
-    onClick = { ( ) => pr.action ? pr.action : console.log( 'image-button' ) }
+    className = {`icon-button${ pr.className ? ` ${ pr.className }` : '' }`}
+    onClick = { ( ) => pr.action ? pr.action( ) : console.log( 'image-button' ) }
     id = { pr.id ? pr.id : null }
     name = { pr.name ? pr.name : null }>
     <img
