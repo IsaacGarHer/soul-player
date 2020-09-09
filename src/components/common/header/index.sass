@@ -1,3 +1,5 @@
+@import ../../../global/sass/colors
+
 .header
   width: 100%
   max-width: 100%
@@ -6,17 +8,24 @@
   display: flex
   flex-direction: row
   align-items: center
-  justify-content: space-around
+  justify-content: space-between
+  background-color: $main
   .section-select
-    height: fit-content
+    width: fit-content
     position: relative
+    height: 100%
+    display: flex
+    justify-content: flex-start
+    align-items: center
+    margin-left: 10px
     &:hover
       .sections
         visibility: visible
         opacity: 1
     .space
-      font-size: 1.3em
+      font-size: 1.2em
       font-family: 'Quicksand'
+      color: $highlight
     .sections
       list-style: none
       display: flex
@@ -28,12 +37,47 @@
       position: absolute
       top: 100%
       left: 0%
-      width: 100%
-      height: 60px
-      background: #444
+      width: fit-content
+      height: 90px
       opacity: 0
       transition: 0.15s ease-in
       .section-options
-        a
+        font-family: 'Quicksand'
+        font-size: 0.9em
+        letter-spacing: 1.5px
+        height: calc( 100% / 3 )
+        display: flex
+        align-items: center
+        justify-content: flex-start
+        .nav-link
           text-decoration: none
-          color: #fff
+          color: $highlight
+  .section-search
+    width: 35vw
+    margin-right: 5vw
+    .search-bar
+      display: flex
+      align-items: center
+      justify-content: space-between
+      .input-search
+        width: calc( 33vw - 7vh )
+        height: 4vh
+        border-radius: 3px
+        border: none
+        background: $highlight
+        padding: 0 1vw
+        color: $base
+        font-weight: 900
+        font-family: 'Quicksand'
+        &:focus
+          outline: none
+      .icon-button
+        min-width: 7vh
+        height: 7vh
+        display: flex
+        align-items: center
+        justify-content: center
+        &:focus
+          outline: none
+        .icon
+          height: 3vh

@@ -11,7 +11,7 @@ const IconButton = pr => (
     name = { pr.name ? pr.name : null }>
     <img
       className = 'icon'
-      src = { pr.image ? pr.image : cancel }
+      src = { pr.icon ? pr.icon : cancel }
       alt = { pr.alt ? pr.alt : 'cancel' }/>
   </button>
 )

@@ -3,6 +3,8 @@ import { NavLink } from 'react-router-dom'
 import { ROUTES } from '../../../global/jsx/'
 import './index.sass'
 
+import search from '../../../resources/icons/search.svg'
+
 import IconButton from '../icon-button'
 
 const Header = ( ) => {
@@ -48,7 +50,7 @@ const Header = ( ) => {
               <Fragment key = { i }/>
               :
               <li key = { i } className = 'section-options'>
-                <NavLink to = { option.route } onClick = { ( ) => setSpace( option.name ) }>{ option.name }</NavLink>
+                <NavLink to = { option.route } className = 'nav-link' onClick = { ( ) => setSpace( option.name ) }>{ option.name }</NavLink>
               </li>
             )) }
           </ul>
@@ -58,7 +60,7 @@ const Header = ( ) => {
       <div className = 'section-search'>
         <div className = 'search-bar'>
           <input type = 'text' name = 'input-search' className = 'input-search'/>
-          <IconButton/>
+          <IconButton icon = { search }/>
         </div>
       </div>
     </div>
