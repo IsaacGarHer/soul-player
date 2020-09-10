@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import { Switch, Route } from 'react-router-dom'
 import { ROUTES } from './global/jsx'
 import './App.sass'
 
@@ -22,21 +21,7 @@ const App = ( ) => {
 
   return (
     <Fragment>
-      <Switch>
-        { routesProperties.map(( element, i ) => (
-          <Route
-            exact
-            path = { element.path }
-            key = { i }
-            component = {
-              ( ) =>
-                <Fragment>
-                  <Header />
-                  { element.component }
-                </Fragment>
-            }/>
-        )) }
-      </Switch>
+      
     </Fragment>
   )
 }

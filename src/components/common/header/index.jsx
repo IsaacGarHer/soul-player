@@ -1,5 +1,4 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
 import { ROUTES } from '../../../global/jsx/'
 import './index.sass'
 
@@ -51,9 +50,7 @@ const Header = ( ) => {
               option.name === space ?
               <Fragment key = { i }/>
               :
-              <li key = { i } className = 'section-options'>
-                <NavLink to = { option.route } className = 'nav-link'>{ option.name }</NavLink>
-              </li>
+              <li key = { i } className = 'section-options'>{ option.name }</li>
             )) }
           </ul>
           :
