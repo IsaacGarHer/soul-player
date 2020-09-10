@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ROUTES } from '../../../global/jsx/'
 import './index.sass'
@@ -9,16 +9,20 @@ import IconButton from '../icon-button'
 
 const Header = ( ) => {
   //space indicator
-  const [ space, setSpace ] = useState( 'Canciones' )
+  const [ space, setSpace ] = useState( 'Player' )
 
   const sections = [
+    {
+      name: 'Player',
+      route: ROUTES.HOME
+    },
     {
       name: 'Canciones',
       route: ROUTES.SONGS
     },
     {
       name: 'Artistas',
-      route: ROUTES.ARTIST
+      route: ROUTES.ARTISTS
     },
     {
       name: 'Albums',
@@ -30,14 +34,12 @@ const Header = ( ) => {
     }
   ]
 
-  //commented option to fix error when updating the URL
-  /*useLayoutEffect(( ) => {
-    setSpace( window.location.pathname )
-  })*/
-
-  /*{ sections.map(( sec, i ) => (
-    <Fragment key = { i }>{ sec.route === space ? sec.name : null }</Fragment>
-  ))}*/
+  useEffect(( ) => {
+    sections.forEach( sec => {
+      if( sec.route === window.location.pathname )
+        setSpace( sec.name )
+    })
+  })
 
   return (
     <div className = 'header'>
@@ -50,7 +52,7 @@ const Header = ( ) => {
               <Fragment key = { i }/>
               :
               <li key = { i } className = 'section-options'>
-                <NavLink to = { option.route } className = 'nav-link' onClick = { ( ) => setSpace( option.name ) }>{ option.name }</NavLink>
+                <NavLink to = { option.route } className = 'nav-link'>{ option.name }</NavLink>
               </li>
             )) }
           </ul>

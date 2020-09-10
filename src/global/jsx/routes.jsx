@@ -1,8 +1,9 @@
 const ROUTES = {
-  SONGS: '/',
-  ARTIST: '/artists/',
-  ALBUMS: '/albums/',
-  GENERS: '/geners/'
+  HOME: '/',
+  SONGS: '/songs',
+  ARTISTS: '/artists',
+  ALBUMS: '/albums',
+  GENERS: '/geners'
 }
 
 export default ROUTES
