@@ -3,9 +3,7 @@ import './index.sass'
 
 const Songs = ( ) => {
   return (
-    <div className = 'songs' style = {{ color: '#fff' }}>
-      Hello
-    </div>
+    <div className = 'songs' />
   )
 }
 

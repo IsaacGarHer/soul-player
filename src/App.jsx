@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { ROUTES } from './global/jsx'
 import './App.sass'
 
@@ -8,20 +8,22 @@ import Songs from './components/windows/songs'
 
 const App = ( ) => {
 
-  const routesProperties = [
-    {
-      path: ROUTES.HOME,
-      component: <Home />
-    },
-    {
-      path: ROUTES.SONGS,
-      component: <Songs />
-    }
+  const [ window, setWindow ] = useState( ROUTES[ 0 ] )
+
+  const main = [
+    <Home />,
+    <Songs />,
+    <Songs />,
+    <Songs />,
+    <Songs />
   ]
 
   return (
     <Fragment>
-      
+      <Header window = { window } setWindow = { setWindow }/>
+      { ROUTES.map(( route, i ) => (
+        window === route ? main[ i ] : null
+      )) }
     </Fragment>
   )
 }

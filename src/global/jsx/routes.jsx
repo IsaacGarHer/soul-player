@@ -1,9 +1,9 @@
-const ROUTES = {
-  HOME: '/',
-  SONGS: '/songs',
-  ARTISTS: '/artists',
-  ALBUMS: '/albums',
-  GENERS: '/geners'
-}
+const ROUTES = [
+  'Inicio',
+  'Cancinoes',
+  'Artistas',
+  'Albums',
+  'Generos'
+]
 
 export default ROUTES

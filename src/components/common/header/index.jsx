@@ -6,51 +6,30 @@ import search from '../../../resources/icons/search.svg'
 
 import IconButton from '../icon-button'
 
-const Header = ( ) => {
+const Header = ({ window, setWindow }) => {
   //space indicator
-  const [ space, setSpace ] = useState( 'Player' )
+  const [ section, setSection ] = useState( window ? window : ROUTES[ 0 ] )
 
-  const sections = [
-    {
-      name: 'Player',
-      route: ROUTES.HOME
-    },
-    {
-      name: 'Canciones',
-      route: ROUTES.SONGS
-    },
-    {
-      name: 'Artistas',
-      route: ROUTES.ARTISTS
-    },
-    {
-      name: 'Albums',
-      route: ROUTES.ALBUMS
-    },
-    {
-      name: 'Generos',
-      route: ROUTES.GENERS
-    }
-  ]
-
-  useEffect(( ) => {
-    sections.forEach( sec => {
-      if( sec.route === window.location.pathname )
-        setSpace( sec.name )
-    })
-  })
+  const chgRoutes = route => {
+    if( setWindow )
+      setWindow( route )
+    setSection( route )
+  }
 
   return (
     <div className = 'header'>
       <div className = 'section-select'>
-        <span className = 'space'>{ space }</span>
-        { sections ?
+        <span className = 'space'>{ section }</span>
+        { ROUTES ?
           <ul className = 'sections'>
-            { sections.map(( option, i ) => (
-              option.name === space ?
-              <Fragment key = { i }/>
+            { ROUTES.map(( route, i ) => (
+              route != section ?
+              <li
+                key = { i }
+                className = 'section-options'
+                onClick = { ( ) => chgRoutes( route ) } >{ route }</li>
               :
-              <li key = { i } className = 'section-options'>{ option.name }</li>
+              <Fragment key = { i }/>
             )) }
           </ul>
           :
