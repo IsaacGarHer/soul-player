@@ -5,14 +5,17 @@ import './App.sass'
 import Header from './components/common/header'
 import Home from './components/windows/home'
 import Songs from './components/windows/songs'
+import UploadSongs from './components/panels/upload-songs'
 
 const App = ( ) => {
 
   const [ window, setWindow ] = useState( ROUTES[ 0 ] )
+  const [ songs, setSongs ] = useState([ ])
 
   const main = [
     <Home />,
-    <Songs />,
+    <Songs
+      songs = { songs }/>,
     <Songs />,
     <Songs />,
     <Songs />
@@ -24,6 +27,7 @@ const App = ( ) => {
       { ROUTES.map(( route, i ) => (
         window === route ? main[ i ] : null
       )) }
+      <UploadSongs setSongs = { setSongs } />
     </Fragment>
   )
 }
