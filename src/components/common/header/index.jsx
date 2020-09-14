@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState } from 'react'
 import { ROUTES } from '../../../global/jsx/'
 import './index.sass'
 
@@ -23,7 +23,7 @@ const Header = ({ window, setWindow }) => {
         { ROUTES ?
           <ul className = 'sections'>
             { ROUTES.map(( route, i ) => (
-              route != section ?
+              route !== section ?
               <li
                 key = { i }
                 className = 'section-options'

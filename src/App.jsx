@@ -25,7 +25,9 @@ const App = ( ) => {
     <Fragment>
       <Header window = { window } setWindow = { setWindow }/>
       { ROUTES.map(( route, i ) => (
-        window === route ? main[ i ] : null
+        <Fragment key = { i }>
+          { window === route ? main[ i ] : null }
+        </Fragment>
       )) }
       <UploadSongs setSongs = { setSongs } />
     </Fragment>
