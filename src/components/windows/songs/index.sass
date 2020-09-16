@@ -10,7 +10,7 @@
   flex-direction: row
   flex-wrap: wrap
   justify-content: flex-start
-  align-items: start
+  align-items: flex-start
   .song
     width: 20vw
     height: 15vh
@@ -23,10 +23,13 @@
       display: flex
       flex-direction: column
       margin-left: 5px
-      .title, .artists
+      span
         color: $highlight
         font-family: 'Roboto'
       .title
         font-size: 1em
       .artists
         font-size: 0.9em
+      .time
+        font-size: 0.9em
+        font-style: italic

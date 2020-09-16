@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from 'react'
-import * as mmb from 'music-metadata-browser'
 import { ROUTES } from './global/jsx'
 import './App.sass'
 
@@ -31,7 +30,7 @@ const App = ( ) => {
           { window === route ? main[ i ] : null }
         </Fragment>
       )) }
-      <UploadSongs setSongs = { songs, setSongs } />
+      <UploadSongs setSongs = { setSongs } />
     </Fragment>
   )
 }
