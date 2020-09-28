@@ -3,33 +3,42 @@
 .songs
   width: 100%
   max-width: 100%
-  height: 85vh
-  max-height: 85vh
+  height: fit-content
+  min-height: 85vh
   background: $base
   display: flex
-  flex-direction: row
-  flex-wrap: wrap
   justify-content: flex-start
   align-items: flex-start
-  .song
-    width: 20vw
-    height: 15vh
+  .all
+    width: 100%
+    height: fit-content
     display: flex
-    align-items: center
+    flex-direction: row
+    flex-wrap: wrap
     justify-content: flex-start
-    .cover
-      height: 15vh
-    .info
+    align-items: flex-start
+    .song
+      width: 25%
+      height: 10vh
       display: flex
-      flex-direction: column
-      margin-left: 5px
-      span
-        color: $highlight
-        font-family: 'Roboto'
-      .title
-        font-size: 1em
-      .artists
-        font-size: 0.9em
-      .time
-        font-size: 0.9em
-        font-style: italic
+      align-items: center
+      justify-content: flex-start
+      margin: 10px 0 0 0
+      &:hover
+        background: #fff4
+      .cover
+        height: 10vh
+      .info
+        display: flex
+        flex-direction: column
+        margin-left: 5px
+        span
+          color: $highlight
+          font-family: 'Roboto'
+        .title
+          font-size: 0.9em
+        .artists
+          font-size: 0.8em
+        .time
+          font-size: 0.8em
+          font-style: italic
