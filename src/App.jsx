@@ -6,7 +6,8 @@ import Header from './components/common/header'
 import Home from './components/windows/home'
 import Songs from './components/windows/songs'
 import Artists from './components/windows/artists'
-import UploadSongs from './components/panels/upload-songs'
+import Uploader from './components/panels/uploader'
+import Player from './components/panels/player'
 
 const App = ( ) => {
 
@@ -38,11 +39,15 @@ const App = ( ) => {
           { window === route ? main[ i ] : null }
         </Fragment>
       ))}
-      <UploadSongs
+      <Uploader
         setSongs = { setSongs}
         setLyrics = { setLyrics }
         setArtists = { setArtists }
         setAlbums = { setAlbums } />
+      <Player
+        lyrics = { lyrics }
+        albums = { albums }
+        artists = { artists }/>
     </Fragment>
   )
 }

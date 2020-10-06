@@ -3,7 +3,7 @@ import './index.sass'
 
 import MainButton from '../../common/main-button'
 
-const UploadSongs = ({ setSongs, setLyrics, setArtists, setAlbums }) => {
+const Uploader = ({ setSongs, setLyrics, setArtists, setAlbums }) => {
 
   const [ visible, setVisibility ] = useState( true )
 
@@ -61,4 +61,4 @@ const UploadSongs = ({ setSongs, setLyrics, setArtists, setAlbums }) => {
   )
 }
 
-export default UploadSongs
+export default Uploader
