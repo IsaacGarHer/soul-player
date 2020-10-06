@@ -37,7 +37,7 @@ const Songs = ({ songs }) => {
     return result = `${ result }${ hours !== undefined ? 'h' : minutes !== undefined ? 'm' : 's' }`
   }
 
-  ( async () => {
+  ( async ( ) => {
     let updater = [ ]
     if( await songs.length > 0 && metas.length === 0 ) {
       for( let i = 0; i < songs.length; i++ ){

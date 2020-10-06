@@ -5,6 +5,7 @@ import './App.sass'
 import Header from './components/common/header'
 import Home from './components/windows/home'
 import Songs from './components/windows/songs'
+import Artists from './components/windows/artists'
 import UploadSongs from './components/panels/upload-songs'
 
 const App = ( ) => {
@@ -17,7 +18,7 @@ const App = ( ) => {
       songs = { songs }/>,
     <Songs
       songs = { songs }/>,
-    <Songs />,
+    <Artists />,
     <Songs />,
     <Songs />
   ]
