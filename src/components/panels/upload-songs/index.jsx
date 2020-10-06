@@ -1,50 +1,59 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './index.sass'
 
 import MainButton from '../../common/main-button'
 
-const UploadSongs = ({ setSongs }) => {
+const UploadSongs = ({ setSongs, setLyrics, setArtists, setAlbums }) => {
 
   const [ visible, setVisibility ] = useState( true )
 
   const closePanel = ( ) => setVisibility( false )
 
-  const filterFiles = files => {
-    for( let i = 0; i < files.length; i++ ){
-      if( files[ i ].type.indexOf( 'audio' ) === -1 ){
-        files.splice( i, 1 )
-        i-=1
-      }
-    }
-    return files
+  const filesFilter = files => {
+    if ( files.length > 0 ){
+      let lyrics = [ ], songs = [ ]
+      let file_extension, audio_type
+
+      files.forEach( file => {
+        file_extension = file.name.split( '.' )
+        audio_type = file.type.indexOf( 'audio' )
+
+        if ( file_extension[ file_extension.length - 1 ] === 'lrc' && audio_type === -1 ){
+          lyrics.push( file )
+        } else if ( audio_type !== -1 )
+          songs.push( file )
+      })
+
+      if( lyrics.length > 0 )
+        console.log( lyrics )
+        //setLyrics( lyrics )
+
+      return songs.length > 0 ? songs : files
+    } else
+      return files
   }
 
-  const upload = e => {
-    let new_songs = Array.from( e.target.files )
-    new_songs = filterFiles( new_songs )
+  const filesUploader = files => {
+    files = Array.from( files )
+    let songs_uploaded = filesFilter( files )
 
-    for( let i = 0; i < new_songs.length; i++ ){
-      new_songs[ i ].URI = URL.createObjectURL( new_songs[ i ] )
+    if ( songs_uploaded.length > 0 ){
+      songs_uploaded.forEach( song => {
+        song.URI = URL.createObjectURL( song )
+      })
+
+      setSongs( songs_uploaded )
     }
-
-    setSongs( new_songs )
   }
-
-  useEffect(( ) => {
-    let uploader = document.getElementsByClassName( 'uploader' )[ 0 ]
-    uploader.addEventListener( 'change', e => upload( e ), false )
-  })
 
   return(
     <div
       className = { `upload-songs ${ visible ? 'visible' : 'hidden' }` }>
       <input
         type = 'file'
-        className = 'uploader'
-        name = 'uploader[ ]'
-        accept = 'audio/*'
-        webkitdirectory = ''
-        multiple />
+        className = 'songs_uploader'
+        webkitdirectory = 'true'
+        onChange = { e => filesUploader( e.target.files ) }/>
       <MainButton
         text = 'Guardar'
         action = { closePanel }/>

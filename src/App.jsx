@@ -12,6 +12,9 @@ const App = ( ) => {
 
   const [ window, setWindow ] = useState( ROUTES[ 0 ] )
   const [ songs, setSongs ] = useState([ ])
+  const [ lyrics, setLyrics ] = useState([ ])
+  const [ albums, setAlbums ] = useState([ ])
+  const [ artists, setArtists ] = useState([ ])
 
   const main = [
     <Home
@@ -23,6 +26,10 @@ const App = ( ) => {
     <Songs />
   ]
 
+  ( async ( ) => {
+
+  })()
+
   return (
     <Fragment>
       <Header window = { window } setWindow = { setWindow }/>
@@ -30,8 +37,12 @@ const App = ( ) => {
         <Fragment key = { i }>
           { window === route ? main[ i ] : null }
         </Fragment>
-      )) }
-      <UploadSongs setSongs = { setSongs } />
+      ))}
+      <UploadSongs
+        setSongs = { setSongs}
+        setLyrics = { setLyrics }
+        setArtists = { setArtists }
+        setAlbums = { setAlbums } />
     </Fragment>
   )
 }
