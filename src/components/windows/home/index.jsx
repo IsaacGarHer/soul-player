@@ -1,5 +1,4 @@
 import React from 'react'
-import * as mmb from 'music-metadata-browser'
 import './index.sass'
 
 const Home = ({ songs }) => {

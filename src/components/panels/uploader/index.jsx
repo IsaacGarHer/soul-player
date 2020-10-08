@@ -21,7 +21,7 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
 
     directory = file.webkitRelativePath.split( '/' )[ 0 ]
     path = file.path.split( '\\' )
-    for ( let i = path.length - 1; i > path.findIndex( element => element === directory ); i-- ){
+    for ( let i = path.length - 1; i > path.findIndex( part => part === directory ); i-- ){
       path.splice( i, 1 )
     }
     path = path.join( '/' )

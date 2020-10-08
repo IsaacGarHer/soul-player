@@ -8,6 +8,7 @@ import Songs from './components/windows/songs'
 import Artists from './components/windows/artists'
 import Uploader from './components/panels/uploader'
 import Player from './components/panels/player'
+import DataSetup from './components/panels/data-setup'
 
 const App = ( ) => {
 
@@ -35,6 +36,11 @@ const App = ( ) => {
           { window === route ? main[ i ] : null }
         </Fragment>
       ))}
+      <DataSetup
+        songs = { songs }
+        setSongs = { setSongs }
+        albums = { albums }
+        setAlbums = { setAlbums }/>
       <Uploader
         setSongs = { setSongs}
         setLyrics = { setLyrics }
