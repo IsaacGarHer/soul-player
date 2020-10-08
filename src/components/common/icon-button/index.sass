@@ -9,12 +9,17 @@
   height: fit-content
   max-width: fit-content
   max-height: fit-content
+  display: flex
+  justify-content: center
+  align-items: center
   &:focus
     animation: focus-back 0.31s
     @keyframes focus-back
       @for $i from 0% through 100%
          #{$i}
            background-image: radial-gradient( circle at center, #0000 calc( #{$i} - 100% ), transparentize( $highlight, .7 ) #{$i}, #0000 calc( #{$i} + 15% ) )
+    outline: none
+    box-shadow: 0px 0px 0px 2px inset $highlight
   .icon
     min-width: 15px
     min-height: 15px

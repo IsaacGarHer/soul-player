@@ -27,10 +27,6 @@ const App = ( ) => {
     <Songs />
   ]
 
-  ( async ( ) => {
-
-  })()
-
   return (
     <Fragment>
       <Header window = { window } setWindow = { setWindow }/>

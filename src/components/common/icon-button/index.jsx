@@ -8,7 +8,8 @@ const IconButton = pr => (
     className = {`icon-button${ pr.className ? ` ${ pr.className }` : '' }`}
     onClick = { ( ) => pr.action ? pr.action( ) : console.log( 'image-button' ) }
     id = { pr.id ? pr.id : null }
-    name = { pr.name ? pr.name : null }>
+    name = { pr.name ? pr.name : null }
+    tabIndex = { pr.tab ? pr.tab : -1 }>
     <img
       className = 'icon'
       src = { pr.icon ? pr.icon : cancel }

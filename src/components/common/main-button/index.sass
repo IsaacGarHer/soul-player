@@ -1,0 +1,17 @@
+@import ../../../global/sass/colors
+
+.main-button
+  background: $main
+  color: $highlight
+  border: none
+  width: fit-content
+  height: fit-content
+  padding: 8px 20px
+  transition: 0.2s ease-out
+  font-size: 0.9em
+  font-family: 'Roboto'
+  &:focus, &:hover
+    background: $auxiliar
+  &:focus
+    outline: none
+    box-shadow: 0px 0px 0px 2px inset $highlight
