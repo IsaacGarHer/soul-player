@@ -5,8 +5,8 @@ import './index.sass'
 const Home = ({ songs }) => {
 
   ( async () => {
-    if( await songs.length > 0 )
-      console.log(await mmb.parseBlob( songs[ 0 ] ), songs[ 0 ])
+    /*if( await songs.length > 0 )
+      console.log(await mmb.parseBlob( songs[ 0 ] ), songs[ 0 ])*/
   })()
 
   return (
