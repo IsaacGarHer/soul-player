@@ -1,25 +1,26 @@
 @import ../../../global/sass/colors
+@import ../../../global/sass/mixins
   
 .icon-button
-  background: transparent
-  border: none
-  padding: 0
-  margin: 0
-  width: fit-content
-  height: fit-content
-  max-width: fit-content
-  max-height: fit-content
+  @include flex-cc
+  @include only-content
+  max-width: 100%
+  max-height: 100%
+  position: relative
   display: flex
-  justify-content: center
-  align-items: center
-  &:focus
-    animation: focus-back 0.31s
-    @keyframes focus-back
-      @for $i from 0% through 100%
-         #{$i}
-           background-image: radial-gradient( circle at center, #0000 calc( #{$i} - 100% ), transparentize( $highlight, .7 ) #{$i}, #0000 calc( #{$i} + 15% ) )
-    outline: none
-    box-shadow: 0px 0px 0px 2px inset $highlight
   .icon
     min-width: 15px
     min-height: 15px
+    max-width: 100%
+    max-height: 100%
+  .button
+    @include absolute-space
+    @include below-to-0
+    background: transparent
+    transition: 0.1s ease-in-out
+    border: none
+    border-radius: 50%
+    &:focus
+      animation: focus-back 0.31s
+      outline: none
+      box-shadow: 0px 0px 7px 1px transparentize( $highlight, 0.2 )

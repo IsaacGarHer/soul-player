@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 import { ROUTES } from './global/jsx'
 import './App.sass'
 
-import Header from './components/common/header'
+import Sidebar from './components/common/sidebar'
 import Home from './components/windows/home'
 import Songs from './components/windows/songs'
 import Artists from './components/windows/artists'
@@ -30,12 +30,14 @@ const App = ( ) => {
 
   return (
     <Fragment>
-      <Header window = { window } setWindow = { setWindow }/>
       { ROUTES.map(( route, i ) => (
         <Fragment key = { i }>
           { window === route ? main[ i ] : null }
         </Fragment>
       ))}
+      <Sidebar
+        window = { window }
+        setWindow = { setWindow }/>
       <DataSetup
         songs = { songs }
         setSongs = { setSongs }

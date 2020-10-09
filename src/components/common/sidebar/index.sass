@@ -1,0 +1,21 @@
+@import ../../../global/sass/colors
+@import ../../../global/sass/mixins
+
+.sidebar
+  @include flex-0c
+  flex-direction: column
+  background: $detail
+  height: 100vh
+  width: 5vw
+  position: fixed
+  top: 0
+  right: 0
+  box-shadow: 0px -2px 2px 0 transparentize( $highlight, 0.5 )
+  .icon-button
+    width: 2.5vw
+    height: 2.5vw
+    margin-top: 20px
+    &:first-child
+      margin-top: 10px
+    .icon
+      @include all-space
