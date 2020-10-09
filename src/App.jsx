@@ -19,7 +19,7 @@ const App = ( ) => {
   const [ artists, setArtists ] = useState([ ])
 
   const windowChanger = i => {
-    let scroll_container = document.getElementById( 'scroller' )
+    let scroll_container = document.getElementById( 'root' )
     let height = document.body.clientHeight
 
     scroll_container.scroll({
@@ -30,7 +30,7 @@ const App = ( ) => {
   }
 
   return (
-    <div id = 'scroller'>
+    <Fragment>
       <Home/>
       <Songs
         albums = { albums }
@@ -54,7 +54,7 @@ const App = ( ) => {
         lyrics = { lyrics }
         albums = { albums }
         artists = { artists }/>
-    </div>
+    </Fragment>
   )
 }
 
