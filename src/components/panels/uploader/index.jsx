@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './index.sass'
 
 import MainButton from '../../common/main-button'
+import IconButton from '../../common/icon-button'
 
 const Uploader = ({ setSongs, setLyrics, setArtists }) => {
 
@@ -100,6 +101,8 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
       <div className = 'menu' >
         <div className = 'menu-head'>
           <span className = 'panel-title'>Carpetas</span>
+          <IconButton
+            action = { ( ) => setVisibility( false ) }/>
         </div>
         <div className = 'menu-main'>
           <div className = 'path-changer'>

@@ -18,14 +18,26 @@ const App = ( ) => {
   const [ albums, setAlbums ] = useState([ ])
   const [ artists, setArtists ] = useState([ ])
 
+  const windowChanger = i => {
+    let scroll_container = document.getElementById( 'scroller' )
+    let height = document.body.clientHeight
+
+    scroll_container.scroll({
+      top: height * i,
+      left: 0,
+      behavior: 'smooth'
+    })
+  }
+
   return (
-    <Fragment>
+    <div id = 'scroller'>
       <Home/>
       <Songs
         albums = { albums }
         songs = { songs }/>
       <Artists/>
       <Sidebar
+        windowChanger = { windowChanger }
         window = { window }
         setWindow = { setWindow }/>
       <DataSetup
@@ -42,7 +54,7 @@ const App = ( ) => {
         lyrics = { lyrics }
         albums = { albums }
         artists = { artists }/>
-    </Fragment>
+    </div>
   )
 }
 
