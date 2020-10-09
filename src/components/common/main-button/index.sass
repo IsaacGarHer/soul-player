@@ -1,11 +1,11 @@
 @import ../../../global/sass/colors
+@import ../../../global/sass/mixins
 
 .main-button
+  @include only-content
   background: $main
   color: $highlight
   border: none
-  width: fit-content
-  height: fit-content
   padding: 8px 20px
   transition: 0.2s ease-out
   font-size: 0.9em

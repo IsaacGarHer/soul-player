@@ -1,11 +1,8 @@
 @import ../../../global/sass/colors
+@import ../../../global/sass/mixins
 
 .songs
-  width: 100%
-  max-width: 100%
-  height: fit-content
-  min-height: 85vh
-  background: $base
+  @include window-basic-configuration
   display: flex
   justify-content: flex-start
   align-items: flex-start

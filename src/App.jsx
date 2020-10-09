@@ -18,23 +18,13 @@ const App = ( ) => {
   const [ albums, setAlbums ] = useState([ ])
   const [ artists, setArtists ] = useState([ ])
 
-  const main = [
-    <Home
-      songs = { songs }/>,
-    <Songs
-      songs = { songs }/>,
-    <Artists />,
-    <Songs />,
-    <Songs />
-  ]
-
   return (
     <Fragment>
-      { ROUTES.map(( route, i ) => (
-        <Fragment key = { i }>
-          { window === route ? main[ i ] : null }
-        </Fragment>
-      ))}
+      <Home/>
+      <Songs
+        albums = { albums }
+        songs = { songs }/>
+      <Artists/>
       <Sidebar
         window = { window }
         setWindow = { setWindow }/>

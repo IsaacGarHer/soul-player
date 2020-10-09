@@ -1,3 +1,5 @@
+@import ./colors
+
 @mixin absolute-space
   position: absolute
   top: 0
@@ -31,3 +33,11 @@
   margin: 0
   padding: 0
   
+@mixin window-basic-configuration
+  width: 95vw
+  height: 95vh
+  max-height: 95vh
+  padding-bottom: 5vh
+  background: $base
+  overflow-x: hidden
+  overflow-y: auto
