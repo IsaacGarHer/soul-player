@@ -15,7 +15,6 @@ const App = ( ) => {
   const [ window, setWindow ] = useState( ROUTES[ 0 ] )
   const [ songs, setSongs ] = useState([ ])
   const [ lyrics, setLyrics ] = useState([ ])
-  const [ albums, setAlbums ] = useState([ ])
   const [ artists, setArtists ] = useState([ ])
 
   const windowChanger = i => {
@@ -33,8 +32,8 @@ const App = ( ) => {
     <Fragment>
       <Home/>
       <Songs
-        albums = { albums }
-        songs = { songs }/>
+        songs = { songs }
+        window = { window }/>
       <Artists/>
       <Sidebar
         windowChanger = { windowChanger }
@@ -42,17 +41,13 @@ const App = ( ) => {
         setWindow = { setWindow }/>
       <DataSetup
         songs = { songs }
-        setSongs = { setSongs }
-        albums = { albums }
-        setAlbums = { setAlbums }/>
+        setSongs = { setSongs }/>
       <Uploader
         setSongs = { setSongs}
         setLyrics = { setLyrics }
-        setArtists = { setArtists }
-        setAlbums = { setAlbums } />
+        setArtists = { setArtists }/>
       <Player
         lyrics = { lyrics }
-        albums = { albums }
         artists = { artists }/>
     </Fragment>
   )

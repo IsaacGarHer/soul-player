@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.sass'
 
-const Player = ({ lyrics, albums, artists }) => {
+const Player = ({ lyrics, artists }) => {
   return (
     <div style = {{ display : "none" }}>
       { lyrics && lyrics.length > 0 ?

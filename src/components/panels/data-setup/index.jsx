@@ -2,23 +2,19 @@ import React, { Fragment } from 'react'
 import * as mmb from 'music-metadata-browser'
 import './index.sass'
 
-const DataSetup = ({ songs, setSongs, albums, setAlbums }) => {
+const DataSetup = ({ songs, setSongs }) => {
 
   //this method do a selection and create an array with albums without repeat the same file
-  const albumsFilter = files => {
-    if ( files.length > 0 ){
-      files.forEach( async file => {
-        let { common } = await mmb.parseBlob( file )
-        let name = common.album
-        if ( albums.findIndex( album => album.name === name ) < 0 ){
-          let cover = { }
-          let picture = mmb.selectCover( common.picture )
-          cover.img = URL.createObjectURL( new Blob([ picture.data.buffer ], { type: picture.type }) )
-          cover.name = name
-          albums.push( cover )
-        }
-      })
-      setAlbums( albums )
+  const albumFilter = ( song, meta, files ) => {
+    if ( meta && songs && songs.length > 0 ){
+      let album_indexing = files.findIndex( file => file.album === meta.album )
+      let has_cover = song.cover ? true : false
+      if ( album_indexing >= 0 && !has_cover )
+        return files[ album_indexing ].cover
+      if ( album_indexing < 0 && !has_cover ){
+        let picture = mmb.selectCover( meta.picture )
+        return URL.createObjectURL( new Blob([ picture.data.buffer ], { type: picture.type }) )
+      }
     }
   }
 
@@ -41,13 +37,13 @@ const DataSetup = ({ songs, setSongs, albums, setAlbums }) => {
 
   //this method embed the metadata the songs files
   ( async ( ) => {
-    if ( await songs.length > 0 && albums.length === 0 ){
-      albumsFilter( songs )
+    if ( await songs.length > 0 && !songs[ 0 ].meta ){
       songs.forEach( async song => {
         let { common, format } = await mmb.parseBlob( song )
         let artists = common.artist.indexOf( ';' ) ? common.artist.split( ';' ) : [ common.artist[ 0 ] ]
         let genre = common.genre.indexOf( ';' ) ? common.genre[ 0 ].split( ';' ) : common.genre
 
+        song.cover = albumFilter( song, common, songs )
         song.duration = format.duration
         song.durationTimeFormat = toTimeFormat( format.duration )
         song.meta = {

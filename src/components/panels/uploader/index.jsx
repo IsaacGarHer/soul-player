@@ -102,7 +102,7 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
         <div className = 'menu-head'>
           <span className = 'panel-title'>Carpetas</span>
           <IconButton
-            action = { ( ) => setVisibility( false ) }/>
+            action = {( ) => setVisibility( false )}/>
         </div>
         <div className = 'menu-main'>
           <div className = 'path-changer'>

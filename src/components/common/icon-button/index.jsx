@@ -18,9 +18,6 @@ const IconButton = pr => (
       tabIndex = { pr.tab ? pr.tab : -1 }
       onClick = { e => {  
         pr.action ? pr.action( ) : console.log( 'image-button' )
-        console.log( e )
-        console.log( e.target )
-        console.log( Object.create( e.target ) )
         e.target.blur( )
       }}/>
   </div>

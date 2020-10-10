@@ -24,6 +24,24 @@
   display: flex
   align-items: center
   justify-content: space-between
+
+@mixin flex-ss
+  display: flex
+  align-items: flex-start
+  justify-content: flex-start
+
+@mixin scroll-edit
+  transition: 0.1s ease-in-out
+  &::-webkit-scrollbar
+    width: 10px
+  &::-webkit-scrollbar-thumb
+    background: $detail
+    &:hover
+      background: $high-detail
+    &:active
+      background: $highlight
+  &::-webkit-scrollbar-track
+    background: $base
   
 @mixin only-content
   width: fit-content

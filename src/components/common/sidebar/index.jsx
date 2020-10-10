@@ -13,7 +13,7 @@ const Sidebar = ({ windowChanger, window, setWindow }) => (
       ROUTES.map(( route, i ) => (
         <IconButton
           title = { route }
-          action = { ( ) => {
+          action = {( ) => {
             setWindow( route )
             windowChanger( i )
           }}

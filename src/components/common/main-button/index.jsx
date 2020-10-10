@@ -8,7 +8,7 @@ const MainButton = pr => {
       id = { pr.id ? pr.id : null }
       name = { pr.name ? pr.name : null }
       tabIndex = { pr.tab ? pr.tab : -1 }
-      onClick = { ( ) => pr.action ? pr.action( ) : console.log( 'main-button' ) }>{ pr.text ? pr.text : 'main-button' }</button>
+      onClick = {( ) => pr.action ? pr.action( ) : console.log( 'main-button' ) }>{ pr.text ? pr.text : 'main-button' }</button>
   )
 }
 
