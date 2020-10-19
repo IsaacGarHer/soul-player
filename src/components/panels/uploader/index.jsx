@@ -85,6 +85,8 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
     return result
   }
 
+
+
   //This function embeds the metadata in his respective songs
   const embedMeta = async songs => {
     try {
@@ -117,6 +119,38 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
     }
   }
 
+  const optimizerOfWork = async songs => {
+    let uploaded = [ ], tempSongs = [ ], indexed, results
+    let total = songs.length % 10
+    total = total === 0 ? songs.length / 10  : ( 10 - total + songs.length ) / 10
+
+    for ( let i = 0; i < total; i++ ) {
+      tempSongs = [ ]
+
+      for ( let x = 0; x < 10; x++ ) {
+        indexed = x + i * 10
+
+        if ( songs[ indexed ] !== undefined )
+          tempSongs.push( songs[ indexed ] )
+      }
+      if ( tempSongs.length > 0 ) {
+        results = await embedMeta( tempSongs )
+        
+        if ( results !== undefined && results.length > 0 ) {
+          results.forEach( result => uploaded.push( result ))
+
+          for( let y = 0; y < 10; y++ ){
+            indexed = y + i * 10
+
+            if( uploaded[ indexed ] !== undefined )
+              uploaded[ indexed ].cover = albumFilter(uploaded[ indexed ], uploaded)
+          }
+        }
+      }
+    }
+    return uploaded
+  }
+
   const musicFilesUploader = files => {
     files = Array.from( files )
     let songs_uploaded = audioFilesFilter( files )
@@ -129,14 +163,11 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
         song.URI = URL.createObjectURL( song )
       })
 
-      embedMeta( songs_uploaded )
+      optimizerOfWork( songs_uploaded )
       .then( songs => {
-        songs.forEach( song => {
-          song.cover = albumFilter( song, songs )
-        })
-        console.log( songs )
-        setSongsPath( path )
+        //console.log( true )
         setSongs( songs )
+        setSongsPath( path )
       })
       .catch( err => console.log( err ))
     }
