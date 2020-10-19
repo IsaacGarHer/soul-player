@@ -5,7 +5,9 @@ import cancel from '../../../resources/icons/cancel-not-using-in-final-version.s
 
 const IconButton = pr => (
   <div
-    className = {`icon-button${ pr.className ? ` ${ pr.className }` : '' }`}>
+    className = {`icon-button${ pr.className ? ` ${ pr.className }` : '' }`}
+    id = { pr.id ? pr.id : null }
+    name = { pr.name ? pr.name : null }>
     <img
       className = 'icon'
       src = { pr.icon ? pr.icon : cancel }
@@ -13,8 +15,6 @@ const IconButton = pr => (
     <button
       title = { pr.title ? pr.title : 'Boton de Icono' }
       className = 'button'
-      id = { pr.id ? pr.id : null }
-      name = { pr.name ? pr.name : null }
       tabIndex = { pr.tab ? pr.tab : -1 }
       onClick = { e => {  
         pr.action ? pr.action( ) : console.log( 'image-button' )

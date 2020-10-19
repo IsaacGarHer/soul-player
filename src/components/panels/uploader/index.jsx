@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import * as mmb from 'music-metadata-browser'
 import './index.sass'
 
 import MainButton from '../../common/main-button'
@@ -30,7 +31,7 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
     return path
   }
 
-  //songs and lyrics uploader
+  //Songs and lyrics filter
   const audioFilesFilter = files => {
     if ( files.length > 0 ){
       let lyrics = [ ], songs = [ ]
@@ -54,6 +55,68 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
       return files
   }
 
+  //This function add the cover property to each song
+  const albumFilter = ( song, files ) => {
+    if ( song && files.length > 0 ){
+      let album_indexing = files.findIndex( file => file.meta.album === song.meta.album )
+      if ( files[ album_indexing ].cover !== undefined )
+        return files[ album_indexing ].cover
+      if ( files[ album_indexing ].cover === undefined ) {
+        let picture = mmb.selectCover( song.meta.picture )
+        return URL.createObjectURL( new Blob([ picture.data.buffer ], { type: picture.type }) )
+      }
+    }
+  }
+
+  //This function does a conversion of time from only seconds to format hh:mm:ss
+  const toTimeFormat = time => {
+    let hours, minutes, seconds, result = ''
+    if ( time > 3600 ){
+      hours = Math.floor( time / 3600 )
+      time = time % 3600
+      result = `${ hours }:`
+    } if ( time > 60 ){
+      minutes = Math.floor( time / 60 )
+      time = time % 60
+      result = `${ result }${ minutes < 10 ? `0${ minutes }` : minutes }:`
+    }
+    seconds = Math.round( time )
+    result = `${ result }${ minutes === undefined ? '00:' : '' }${ seconds < 10 ? `0${ seconds }` : seconds }`
+    return result
+  }
+
+  //This function embeds the metadata in his respective songs
+  const embedMeta = async songs => {
+    try {
+      for( let i = 0; i < songs.length; i++ ){
+        let { common, format } = await mmb.parseBlob( songs[ i ] )
+        let artists = common.artist.indexOf( ';' ) ? common.artist.split( ';' ) : [ common.artist[ 0 ] ]
+        let genres = common.genre.indexOf( ';' ) ? common.genre[ 0 ].split( ';' ) : common.genre
+
+        for( let x = 0; x < genres.length; x++ ){
+          genres[ x ] = genres[ x ].trim( )
+        }
+
+        songs[ i ].duration = format.duration
+        songs[ i ].durationTimeFormat = toTimeFormat( format.duration )
+        songs[ i ].meta = {
+          title: common.title,
+          artists: artists,
+          album: common.album,
+          year: common.year,
+          track_number: common.track.no,
+          genres: genres,
+          album_artist: common.albumartist,
+          picture: common.picture
+        }
+      }
+
+      return songs
+    } catch( err ) {
+      return err
+    }
+  }
+
   const musicFilesUploader = files => {
     files = Array.from( files )
     let songs_uploaded = audioFilesFilter( files )
@@ -66,12 +129,20 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
         song.URI = URL.createObjectURL( song )
       })
 
-      setSongsPath( path )
-      setSongs( songs_uploaded )
+      embedMeta( songs_uploaded )
+      .then( songs => {
+        songs.forEach( song => {
+          song.cover = albumFilter( song, songs )
+        })
+        console.log( songs )
+        setSongsPath( path )
+        setSongs( songs )
+      })
+      .catch( err => console.log( err ))
     }
   }
 
-  //artists uploader
+  //Artists uploader
   const artistsImagesUploader = images => {
     let path
     images = Array.from( images )

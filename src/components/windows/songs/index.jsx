@@ -1,10 +1,12 @@
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import { ROUTES } from '../../../global/jsx'
 import './index.sass'
 
+import Card from '../../common/card'
+
 const Songs = ({ songs, window }) => {
 
-  const [ listening, setListening ] = useState( '' )
+  const [ listening, setListening ] = useState( '' ) 
 
   const play = ( URI, meta ) => {
     setListening( URI )
@@ -19,37 +21,20 @@ const Songs = ({ songs, window }) => {
   return (
     <div className = 'songs'>
       <div className = 'all'>
-        { songs && songs.length > 0 ?
+      { songs && songs.length > 0 ?
           songs.map(( song, i ) => (
-            song !== undefined && song.meta ?
-            <div
-              className = 'song'
-              key = { i }>
-              <img
-                src = { song.cover }
-                alt = { song.meta.album }
-                className = 'cover'/>
-              <div className = 'info'>
-                <span className = 'song-title'>{ song.meta.title }</span>
-                <span className = 'song-artist'>{
-                  `${ song.meta.artists.map( artist => artist ) }`
-                }</span>
-                <span className = 'song-time'>{ song.durationTimeFormat }</span>
-              </div>
-              <button
-                className = 'tab-indicator'
-                tabIndex = { window && window === ROUTES[ 1 ] ? '0' : '-1' }
-                onClick = { e => {
-                  play( song.URI, song.meta )
-                  e.target.blur( )
-                }}/>
-            </div>
-            :
-            <Fragment key = { i }/>
+            <Card
+              key = { i }
+              class = 'song'
+              img = { song.cover }
+              alt = { song.meta === undefined ? song.name : song.meta.album }
+              texts = { song.meta === undefined ? [ song.name, song.name, song.durationTimeFormat ] : [ song.meta.title, `${song.meta.artists.map( artist => artist )}`, song.durationTimeFormat ]}
+              action = {( ) => song.meta === undefined ? console.log( ) : play( song.URI, song.meta )}
+              tab = { window && window === ROUTES[ 1 ] ? '0' : '-1' }/>
           ))
           :
           null }
-        <audio src = { listening } className = 'player' controls tabIndex = '-1'/>
+        <audio src = { listening } className = 'player' controls tabIndex = '-1' muted/>
       </div>
     </div>
   )

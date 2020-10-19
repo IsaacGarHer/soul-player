@@ -39,9 +39,11 @@ const App = ( ) => {
         windowChanger = { windowChanger }
         window = { window }
         setWindow = { setWindow }/>
-      <DataSetup
+      {/*<DataSetup
         songs = { songs }
-        setSongs = { setSongs }/>
+        setSongs = { setSongs }
+        setReady = { setReady }
+      ready = { ready }/>*/}
       <Uploader
         setSongs = { setSongs}
         setLyrics = { setLyrics }

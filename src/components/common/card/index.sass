@@ -1,0 +1,35 @@
+@import ../../../global/sass/colors
+@import ../../../global/sass/mixins
+
+.card
+  @include flex-0c
+  @include only-content
+  justify-content: flex-start
+  position: relative
+  .cover-card
+    width: 10vw
+  .info-card
+    @include flex-cc
+    position: absolute
+    width: 96%
+    height: fit-content
+    padding: 10px 2%
+    bottom: 0
+    left: 0
+    flex-direction: column
+    background: transparentize( $base, 0.2 )
+    .text-card
+      @include only-content
+      color: $highlight
+      font-size: 0.8em
+  .button-card
+    @include absolute-space
+    background: transparent
+    border: none
+    box-shadow: 1px 1px 3px 0 transparentize( $highlight, 0.7 )
+    transition: 0.1s ease-out
+    &:hover
+      background: transparentize( $highlight, 0.8 )
+    &:focus
+      outline: none
+      box-shadow: 0px 0px 0px 2px inset $highlight
