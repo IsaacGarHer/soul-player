@@ -8,7 +8,6 @@ import Songs from './components/windows/songs'
 import Artists from './components/windows/artists'
 import Uploader from './components/panels/uploader'
 import Player from './components/panels/player'
-import DataSetup from './components/panels/data-setup'
 
 const App = ( ) => {
 
@@ -39,11 +38,6 @@ const App = ( ) => {
         windowChanger = { windowChanger }
         window = { window }
         setWindow = { setWindow }/>
-      {/*<DataSetup
-        songs = { songs }
-        setSongs = { setSongs }
-        setReady = { setReady }
-      ready = { ready }/>*/}
       <Uploader
         setSongs = { setSongs}
         setLyrics = { setLyrics }

@@ -119,6 +119,7 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
     }
   }
 
+  //This function is very important becouse in this part, I optimize the process to upload the songs
   const optimizerOfWork = async songs => {
     let uploaded = [ ], tempSongs = [ ], indexed, results
     let total = songs.length % 10
@@ -151,12 +152,27 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
     return uploaded
   }
 
+  const orderByName = songs => {
+    let temp = [ ], returned = [ ], indexed
+    for ( let i = 0; i < songs.length; i++ ) {
+      temp.push( songs[ i ].name )
+    }
+    temp.sort( )
+    for ( let i = 0; i < temp.length; i++ ) {
+      indexed = songs.findIndex( song => song.name === temp[ i ] )
+      returned.push( songs[ indexed ] )
+      songs.splice( indexed, 1 )
+    }
+    return returned
+  }
+
   const musicFilesUploader = files => {
     files = Array.from( files )
     let songs_uploaded = audioFilesFilter( files )
     let path
 
     if ( songs_uploaded.length > 0 ){
+      songs_uploaded = orderByName( songs_uploaded )
       path = definePath( songs_uploaded[ 0 ] )
 
       songs_uploaded.forEach( song => {
@@ -165,7 +181,6 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
 
       optimizerOfWork( songs_uploaded )
       .then( songs => {
-        //console.log( true )
         setSongs( songs )
         setSongsPath( path )
       })
