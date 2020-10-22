@@ -4,7 +4,7 @@ import './index.sass'
 
 import Card from '../../common/card'
 
-const Songs = ({ songs, window }) => (
+const Songs = ({ songs, window, setListening }) => (
   <div className = 'songs'>
     <div className = 'all'>
     { songs && songs.length > 0 ?
@@ -15,7 +15,7 @@ const Songs = ({ songs, window }) => (
             img = { song.cover }
             alt = { song.meta === undefined ? song.name : song.meta.album }
             texts = { song.meta === undefined ? [ song.name, song.name, song.durationTimeFormat ] : [ song.meta.title, `${song.meta.artists.map( artist => artist )}`, song.durationTimeFormat ]}
-            action = {( ) => console.log( song )}
+            action = {( ) => setListening ? setListening( song ) : console.log( song )}
             tab = { window && window === ROUTES[ 1 ] ? '0' : '-1' }/>
         ))
         :

@@ -1,0 +1,131 @@
+@import ../../../global/sass/colors
+@import ../../../global/sass/mixins
+
+.player
+  @include flex-bc
+  width: 93vw
+  height: 96vh
+  padding: 2vh 1vw
+  background: $base
+  position: fixed
+  flex-direction: column
+  top: 0
+  left: 0
+  transition: 0.1s ease-in-out
+  &.visible
+    visibility: visible
+    opacity: 1
+  &.hidden
+    visibility: hidden
+    opacity: 0
+  .audio-player
+    position: fixed
+    visibility: hidden
+  .player-top
+    @include flex-bc
+    width: 100%
+    height: 70vh
+    .player-top-left
+      @include flex-bc
+      width: calc( 100% - 74vh )
+      height: 100%
+      flex-direction: column
+      .player-info
+        width: 100%
+        .song-info
+          width: calc( 100% - 100px )
+          height: 80px
+          background: $full-dark
+          display: flex
+          align-items: center
+          justify-content: space-between
+          box-shadow: 0px 0px 0px 1px $highlight
+          .song-info-left
+            color: $highlight
+            display: flex
+            flex-direction: column
+            align-items: flex-start
+            justify-content: space-around
+            margin-left: 10px
+            .song-info-text
+              &:first-child
+                font-size: 20px
+                font-weight: 500
+                margin-bottom: 5px
+              &:last-child
+                font-size: 14px
+                font-weight: 400
+          img
+            width: 80px
+            heught: 80px
+      .lyrics-area
+        width: 100%
+        height: calc( 70vh - 120px )
+        background: #444
+    .player-top-right
+      width: 70vh
+      height: 70vh
+      .player-song-cover
+        width: 100%
+        height: 100%
+        box-shadow: 0px 0px 0px 2px $highlight
+  .player-bottom
+    @include flex-0c
+    justify-content: space-around
+    width: 100%
+    height: 26vh
+    flex-direction: column
+    .progress-bar
+      @include flex-ss
+      flex-direction: column
+      width: 100%
+      height: fit-content
+      .time-show
+        color: $highlight
+        font-size: 0.9em
+        margin-bottom: 10px
+      #song-time-slider
+        -webkit-appearance: none
+        background: transparent
+        width: 100%
+        &:focus
+          outline: none
+          &::-webkit-slider-thumb
+            box-shadow: 0px 0px 0px 4px  transparentize( $highlight, 0.5 )
+        &::-webkit-slider-thumb
+          -webkit-appearance: none
+          width: 18px
+          height: 18px
+          border-radius: 50%
+          background: $auxiliar
+          cursor: pointer
+          margin-top: -7px
+          box-shadow: 0px 0px 0px 0px  transparentize( $highlight, 0.5 )
+          transition: 0.1s ease-in-out
+          &:active
+            background: $auxiliar
+        &::-webkit-slider-runnable-track
+          width: 100%
+          height: 4px
+          cursor: pointer
+          border-radius: 10px
+          //background: linear-gradient( to right, #3739ed 50.44%,#fff 50.44%  )
+    .player-controls
+      @include flex-0c
+      justify-content: space-around
+      width: 100%
+      height: 12vh
+      .controls-left, .controls-center, .controls-right
+        @include flex-cc
+        width: fit-content
+        height: fit-content
+        .test-icon
+          width: 40px
+      .controls-left, .controls-right
+        .test-icon
+          &:first-child
+            margin-right: 10px
+      .controls-center
+        .icon-button
+          width: 55px
+          margin: 0 20px

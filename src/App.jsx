@@ -15,6 +15,8 @@ const App = ( ) => {
   const [ songs, setSongs ] = useState([ ])
   const [ lyrics, setLyrics ] = useState([ ])
   const [ artists, setArtists ] = useState([ ])
+  const [ listening, setListening ] = useState( null )
+  const [ player_visibility, setPlayerVisibility ] = useState( false )
 
   const windowChanger = i => {
     let scroll_container = document.getElementById( 'root' )
@@ -32,19 +34,24 @@ const App = ( ) => {
       <Home/>
       <Songs
         songs = { songs }
-        window = { window }/>
+        window = { window }
+        setListening = { setListening }/>
       <Artists/>
       <Sidebar
         windowChanger = { windowChanger }
         window = { window }
-        setWindow = { setWindow }/>
+        setWindow = { setWindow }
+        setPlayerVisibility = { setPlayerVisibility }
+        player_visibility = { player_visibility }/>
       <Uploader
         setSongs = { setSongs}
         setLyrics = { setLyrics }
         setArtists = { setArtists }/>
       <Player
         lyrics = { lyrics }
-        artists = { artists }/>
+        artists = { artists }
+        listening = { listening }
+        player_visibility = { player_visibility }/>
     </Fragment>
   )
 }

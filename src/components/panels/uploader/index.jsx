@@ -85,8 +85,6 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
     return result
   }
 
-
-
   //This function embeds the metadata in his respective songs
   const embedMeta = async songs => {
     try {
