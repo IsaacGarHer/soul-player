@@ -31,13 +31,13 @@ const Player = ({ lyrics, artists, listening, player_visibility }) => {
   const updateRangeValue = ( ct, duration ) => {
     document.getElementById( 'song-time-slider' ).value = ct * 100 / duration
     setGradientValue( Math.round(( ct * 100 / duration ) * 100 ) / 100 )
-    setTime( toTimeFormat( ct ) )
+    setTime( toTimeFormat( ct ))
   }
 
   const updateAudioTime = ( target, duration, click ) =>{
     document.getElementById( 'mp3-player' ).currentTime = target.value * duration / 100
     setGradientValue( target.value )
-    setTime( toTimeFormat( target.value * duration / 100 ) )
+    setTime( toTimeFormat( target.value * duration / 100 ))
     if ( click )
       target.blur( )
   }
