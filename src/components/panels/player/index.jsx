@@ -6,9 +6,8 @@ import IconButton from '../../common/icon-button'
 import test_gray from '../../../resources/icons/test-gray.svg'
 import test_white from '../../../resources/icons/test-white.svg'
 
-const Player = ({ lyrics, artists, listening, player_visibility }) => {
+const Player = ({ artists, listening, listening_lyrics, player_visibility, is_playing, setIsPlaying }) => {
 
-  const [ isPlaying, setIsPlaying ] = useState( true )
   const [ gradient_value, setGradientValue ] = useState( 0 )
   const [ time, setTime ] = useState( 0 )
 
@@ -30,6 +29,18 @@ const Player = ({ lyrics, artists, listening, player_visibility }) => {
 
   const updateRangeValue = ( ct, duration ) => {
     document.getElementById( 'song-time-slider' ).value = ct * 100 / duration
+    let position
+    if ( listening_lyrics.length > 0 ) {
+      for ( let i = 0; i < listening_lyrics.length; i++ ) {
+        if (  ct >= listening_lyrics[ i ].time )
+          position = i
+        else
+          break
+      }
+      document.getElementById( 'listening-lyrics' ).innerText = listening_lyrics[ position ].text
+      document.getElementById( 'listening-lyrics-01' ).innerText = listening_lyrics[ position + 1 ] !== undefined ? listening_lyrics[ position + 1 ].text : ''
+      document.getElementById( 'listening-lyrics-02' ).innerText = listening_lyrics[ position + 2 ] !== undefined ? listening_lyrics[ position + 2 ].text : ''
+    }
     setGradientValue( Math.round(( ct * 100 / duration ) * 100 ) / 100 )
     setTime( toTimeFormat( ct ))
   }
@@ -86,7 +97,9 @@ const Player = ({ lyrics, artists, listening, player_visibility }) => {
                 </div>
               </div>
               <div className = 'lyrics-area'>
-
+                <span id = 'listening-lyrics'/>
+                <span id = 'listening-lyrics-01' className = 'next-lyric'/>
+                <span id = 'listening-lyrics-02' className = 'next-lyric'/>
               </div>
             </div>
             <div className = 'player-top-right'>
@@ -129,11 +142,11 @@ const Player = ({ lyrics, artists, listening, player_visibility }) => {
                   alt = { 'before' }
                   title = 'Anterior'/>
                 <IconButton
-                  icon = { isPlaying ? test_gray : test_white }
+                  icon = { is_playing ? test_gray : test_white }
                   alt = 'play/puse'
                   title = 'play/puse'
                   tab = '1'
-                  action = {( ) => isPlaying ? puaseMusic( ) : playMusic( )}/>
+                  action = {( ) => is_playing ? puaseMusic( ) : playMusic( )}/>
                 <img
                   className = 'test-icon'
                   src = { test_gray }

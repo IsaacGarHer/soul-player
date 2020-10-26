@@ -221,7 +221,7 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
         </div>
         <div className = 'menu-main'>
           <div className = 'path-changer'>
-            <span className = 'path-viewer'>{ songs_path === '' ? 'Carptea de canciones' : songs_path }</span>
+            <span className = 'path-viewer'>{ songs_path === '' ? 'Carpeta de canciones' : songs_path }</span>
             <div className = 'input-path' tabIndex = '1' onKeyDown = { e => activeElement( e, 'songs-uploader' ) }>
               <MainButton
                 text = 'Elegir'/>
@@ -239,7 +239,7 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
             </div>
           </div>
           <div className = 'path-changer'>
-            <span className = 'path-viewer'>{ artists_path === '' ? 'Carptea de artistas' : artists_path }</span>
+            <span className = 'path-viewer'>{ artists_path === '' ? 'Carpeta de artistas' : artists_path }</span>
             <div className = 'input-path' tabIndex = '2' onKeyDown = { e => activeElement( e, 'artists-uploader' ) }>
               <MainButton
                 text = 'Elegir'/>

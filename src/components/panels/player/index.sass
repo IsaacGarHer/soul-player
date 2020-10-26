@@ -59,9 +59,30 @@
             width: 80px
             heught: 80px
       .lyrics-area
+        @include flex-cc
         width: 100%
         height: calc( 70vh - 120px )
-        background: #444
+        position: relative
+        #listening-lyrics
+          font-size: 1.7em
+          font-weight: 500
+          max-width: 80%
+          color: $highlight
+          text-align: center
+        .next-lyric
+          position: absolute
+          text-align: center
+          color: $high-detail
+          &:nth-child( 2 )
+            width: 70%
+            left: 15%
+            bottom: 15%
+            font-size: 1.1em
+          &:last-child
+            width: 70%
+            left: 15%
+            bottom: 0%
+            font-size: 0.9em
     .player-top-right
       width: 70vh
       height: 70vh
