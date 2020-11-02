@@ -6,7 +6,7 @@
   @include flex-ss
   @include scroll-edit
   overflow-y: scroll
-  .all
+  .contain-sngs
     @include flex-ss
     width: 100%
     height: fit-content
@@ -15,11 +15,11 @@
     .song
       width: calc( 20% - 10px )
       margin: 10px 0 0 10px
-      .cover-card
+      .cover-crd
         width: 100%
-      .info-card
+      .info-crd
         @include flex-ss
-        .text-card
+        .text-crd
           &:first-child
             font-size: 0.9em
           &:last-child

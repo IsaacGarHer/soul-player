@@ -6,10 +6,11 @@ import IconButton from '../../common/icon-button'
 import test_gray from '../../../resources/icons/test-gray.svg'
 import test_white from '../../../resources/icons/test-white.svg'
 
-const Player = ({ artists, listening, listening_lyrics, player_visibility, is_playing, setIsPlaying }) => {
+const Player = ({ artists, listening, listening_lyrics, player_visibility, is_playing, setIsPlaying, playlist, lyricsStep, repeat, setRepeat }) => {
 
   const [ gradient_value, setGradientValue ] = useState( 0 )
   const [ time, setTime ] = useState( 0 )
+  const [ visible_playlist, setVisiblePlaylist ] = useState( false )
 
   const toTimeFormat = time => {
     let hours, minutes, seconds, result = ''
@@ -25,6 +26,26 @@ const Player = ({ artists, listening, listening_lyrics, player_visibility, is_pl
     seconds = Math.round( time )
     result = `${ result }${ minutes === undefined ? '00:' : '' }${ seconds < 10 ? `0${ seconds }` : seconds }`
     return result
+  }
+
+  const changeSong = next => {
+    if ( playlist.length > 0 ) {
+      let index = playlist.findIndex( song => song.meta.title === listening.meta.title )
+      if ( index > -1 ) {
+        if ( next ) {
+          if ( index === playlist.length - 1 )
+            lyricsStep( playlist[ 0 ], false )
+          else
+            lyricsStep( playlist[ index + 1 ], false )
+        } else {
+          console.log( index )
+          if ( index === 0 )
+            lyricsStep( playlist[ playlist.length - 1 ], false )
+          else
+            lyricsStep( playlist[ index - 1 ], false )
+        }
+      }
+    }
   }
 
   const updateRangeValue = ( ct, duration ) => {
@@ -53,6 +74,26 @@ const Player = ({ artists, listening, listening_lyrics, player_visibility, is_pl
       target.blur( )
   }
 
+  const toEnd = ( ) => {
+    setIsPlaying( false )
+    if ( playlist.length > 0 ){
+      let index = playlist.findIndex( song => song.name === listening.name )
+      if ( repeat === 0 )
+        if ( index < playlist.length - 1 )
+          lyricsStep( playlist[ index + 1 ], false )
+      if ( repeat === 1 ){
+        if ( index < playlist.length - 1 )
+          lyricsStep( playlist[ index + 1 ], false )
+        else
+          lyricsStep( playlist[ 0 ], false )
+      }
+      if ( repeat === 2 ) {
+        document.getElementById( 'mp3-player' ).play( )
+        setIsPlaying( true )
+      }
+    }
+  }
+
   const puaseMusic = ( ) => {
     document.getElementById( 'mp3-player' ).pause( )
     setIsPlaying( false )
@@ -62,6 +103,13 @@ const Player = ({ artists, listening, listening_lyrics, player_visibility, is_pl
     document.getElementById( 'mp3-player' ).play( )
     setIsPlaying( true )
   }
+
+  const getArtist = ( ) => artists[
+    artists.findIndex( art => {
+      let name = art.name.split( '.' )
+      return name[ 0 ] === listening.meta.artists[ 0 ]
+    })
+  ].URI
 
   const css = `
     #song-time-slider::-webkit-slider-runnable-track {
@@ -80,7 +128,7 @@ const Player = ({ artists, listening, listening_lyrics, player_visibility, is_pl
             className = 'audio-player'
             id = 'mp3-player'
             autoPlay
-            onEnded = {( ) => setIsPlaying( false ) }
+            onEnded = {( ) => toEnd( ) }
             onTimeUpdate = { e => updateRangeValue( e.target.currentTime, listening.duration )}/>
           <div className = 'player-top'>
             <div className = 'player-top-left'>
@@ -90,16 +138,59 @@ const Player = ({ artists, listening, listening_lyrics, player_visibility, is_pl
                     <span className = 'song-info-text'>{ listening.meta.title }</span>
                     <span className = 'song-info-text'>{ `${ listening.meta.artists.map( artist => artist ) }   |   ${ listening.meta.album }` }</span>
                   </div>
-                  <img src = { listening.cover } alt = 'test'/>
+                  { artists.length > 0 ? <img src = { getArtist( )} alt = 'test'/> : <img src = { test_gray } alt = 'test'/>  }
                 </div>
                 <div className = 'next-song'>
-
+                  { playlist.length > 1 ?
+                    <img
+                      className = 'next-song-cover'
+                      src = { playlist[ playlist.length - 1 === playlist.findIndex( song => song.name === listening.name ) ? 0 : playlist.findIndex( song => song.name === listening.name ) + 1 ].cover }
+                      alt = 'siguiente'/>
+                    :
+                    <img
+                      className = 'next-song-cover'
+                      src = { listening.cover }
+                      alt = 'no hay siguiente'/> }
+                  <button
+                    className = 'show-playlist'
+                    onClick = { e => {
+                      setVisiblePlaylist( !visible_playlist )
+                      e.target.blur( )
+                    }}>
+                    <img
+                      src = { test_white }
+                      alt = 'ver'/>
+                  </button>
                 </div>
               </div>
               <div className = 'lyrics-area'>
-                <span id = 'listening-lyrics'/>
-                <span id = 'listening-lyrics-01' className = 'next-lyric'/>
-                <span id = 'listening-lyrics-02' className = 'next-lyric'/>
+                <p id = 'listening-lyrics'/>
+                <p id = 'listening-lyrics-01' className = 'next-lyric'/>
+                <p id = 'listening-lyrics-02' className = 'next-lyric'/>
+                <div className = { `playlist ${ visible_playlist && player_visibility ? 'visible' : 'hidden' }` }>
+                  { playlist.map(( song, i ) => (
+                    <div
+                      className = { `playlist-song${ song.meta.title === listening.meta.title && song.meta.album === listening.meta.album ? ' listening' : '' }` }
+                      key = { i }>
+                        <img
+                          className = 'playlist-song-cover'
+                          src = { song.cover }
+                          alt = { song.meta.album }/>
+                        <div className = 'playlist-song-info'>
+                          <span>{ song.meta.title }</span>
+                          <span>{ `${ song.meta.artists.map( artist => artist )}` }</span>
+                        </div>
+                        <span className = 'playlist-song-number'>{ i + 1 }</span>
+                        <button
+                          className = 'player-song-selector'
+                          tabIndex = { visible_playlist ? '1' : '-1' }
+                          onClick = { e => {
+                            lyricsStep( song, false )
+                            e.target.blur( )
+                          }}/>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
             <div className = 'player-top-right'>
@@ -136,34 +227,40 @@ const Player = ({ artists, listening, listening_lyrics, player_visibility, is_pl
                   title = 'Ecualizador'/>
               </div>
               <div className = 'controls-center'>
-                <img
-                  className = 'test-icon'
-                  src = { test_gray }
-                  alt = { 'before' }
-                  title = 'Anterior'/>
+                <IconButton
+                  icon = { test_gray }
+                  class = 'change-song-plr'
+                  alt = 'anterior'
+                  title = 'anterior'
+                  tab = '1'
+                  action = {( ) => changeSong( false )}/>
                 <IconButton
                   icon = { is_playing ? test_gray : test_white }
                   alt = 'play/puse'
                   title = 'play/puse'
                   tab = '1'
                   action = {( ) => is_playing ? puaseMusic( ) : playMusic( )}/>
-                <img
-                  className = 'test-icon'
-                  src = { test_gray }
-                  alt = { 'next' }
-                  title = 'Siguiente'/>
+                <IconButton
+                  icon = { test_gray }
+                  class = 'change-song-plr'
+                  alt = 'siguiente'
+                  title = 'siguiente'
+                  tab = '1'
+                  action = {( ) => changeSong( true )}/>
               </div>
               <div className = 'controls-right'>
+                <IconButton
+                  class = { `repeat-${ repeat }` }
+                  icon = { repeat === 0 ? test_gray : test_white }
+                  alt = 'no repetir/uno/todos'
+                  title = 'no repetir/uno/todos'
+                  tab = '1'
+                  action = {( ) => setRepeat( repeat === 0 ? 1 : repeat === 1 ? 2 : 0 )}/>
                 <img
                   className = 'test-icon'
                   src = { test_gray }
                   alt = { 'shuffle' }
                   title = 'Azar'/>
-                <img
-                  className = 'test-icon'
-                  src = { test_gray }
-                  alt = { 'repeat' }
-                  title = 'Repetir'/>
               </div>
             </div>
           </div>

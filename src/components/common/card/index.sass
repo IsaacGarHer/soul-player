@@ -6,9 +6,9 @@
   @include only-content
   justify-content: flex-start
   position: relative
-  .cover-card
+  .cover-crd
     width: 10vw
-  .info-card
+  .info-crd
     @include flex-cc
     position: absolute
     width: 96%
@@ -18,11 +18,11 @@
     left: 0
     flex-direction: column
     background: transparentize( $base, 0.2 )
-    .text-card
+    .text-crd
       @include only-content
       color: $highlight
       font-size: 0.8em
-  .button-card
+  .selection-btn-crd
     @include absolute-space
     background: transparent
     border: none
@@ -34,3 +34,25 @@
     &:focus
       outline: none
       box-shadow: 0px 0px 0px 2px inset $highlight
+  .context-menu-btn-crd
+    position: absolute
+    top: 0
+    right: 0
+    width: 40px
+    height: 40px
+    z-index: 1
+    background: none
+    border: none
+    padding: 0
+    transition: 0.1 ease-in-out
+    display: flex
+    justify-content: center
+    align-items: center
+    &:focus
+      outline: none
+      box-shadow: 0px 0px 0px 2px inset transparentize( $highlight, 0.2 )
+    .context-menu-icon-crd
+      width: 25px
+      height: 25px
+  .context-menu
+    top: 40px

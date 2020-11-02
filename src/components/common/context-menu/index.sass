@@ -1,0 +1,46 @@
+@import ../../../global/sass/colors
+@import ../../../global/sass/mixins
+
+.context-menu
+  @include flex-ss
+  top: 0
+  right: 0
+  position: absolute
+  transition: 0.1s 
+  background: $base
+  flex-direction: column
+  z-index: 2
+  &.visible
+    visibility: visible
+    width: 50%
+    height: fit-content
+    border: 1px solid $highlight
+    clip-path: polygon( 0 0, 100% 0, 100% 100%, 0 100%, )
+  &.hidden
+    visibility: hidden
+    border: none
+    clip-path: polygon( 100% 0, 100% 0, 100% 0, 100% 0, )
+  .topic-cxm
+    @include flex-ss
+    flex-direction: column
+    width: 100%
+    height: fit-content
+    border-bottom: 1px solid $highlight
+    transition: 0.1s 
+    &:first-child
+      border-bottom: none
+    .option-cxm
+      color: $highlight
+      font-size: 0.8em
+      width: 100%
+      padding: 5px 0
+      transition: 0.05s ease-in-out
+      background: none
+      border: none
+      padding-right: 10px
+      text-align: right
+      &:hover
+        background: transparentize( $highlight, 0.7 )
+      &:focus
+        outline: none
+        background: transparentize( $highlight, 0.7 )
