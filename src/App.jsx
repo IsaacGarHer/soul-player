@@ -18,6 +18,7 @@ const App = ( ) => {
   const [ listening, setListening ] = useState( null )
   const [ player_visibility, setPlayerVisibility ] = useState( false )
   const [ listening_lyrics, setListeningLyrics ] = useState([ ])
+  const [ listening_artists, setListeningArtists ] = useState([ ])
   const [ playlist, setPlaylist ] = useState([ ])
   const [ is_playing, setIsPlaying ] = useState( false )
   const [ repeat, setRepeat ] = useState( 0 )
@@ -69,6 +70,13 @@ const App = ( ) => {
       new_lyrics.forEach( nl => {
         nl.time = Math.round(( Number( nl.time.substring( 3, 8 )) + Number( nl.time.substring( 0, 2 )) * 60 ) * 100 ) / 100
       })
+
+      let new_listening_artists = [ ]
+      song.meta.artists.forEach( song_artist => {
+        new_listening_artists.push( artists[ artists.findIndex( art => art.title === song_artist ) ] )
+      })
+      setListeningArtists( new_listening_artists )
+
       if ( new_song )
         setPlaylist([ song ])
       setIsPlaying( true )
@@ -107,7 +115,7 @@ const App = ( ) => {
         setLyrics = { setLyrics }
         setArtists = { setArtists }/>
       <Player
-        artists = { artists }
+        listening_artists = { listening_artists }
         listening = { listening }
         listening_lyrics = { listening_lyrics }
         player_visibility = { player_visibility }

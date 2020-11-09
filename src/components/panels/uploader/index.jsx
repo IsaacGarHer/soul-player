@@ -97,6 +97,10 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
           genres[ x ] = genres[ x ].trim( )
         }
 
+        for( let x = 0; x < artists.length; x++ ){
+          artists[ x ] = artists[ x ].trim( )
+        }
+
         songs[ i ].duration = format.duration
         songs[ i ].durationTimeFormat = toTimeFormat( format.duration )
         songs[ i ].meta = {
@@ -195,7 +199,10 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
 
       images.forEach( image => {
         image.URI = URL.createObjectURL( image )
+        image.extention = image.name.search( '.jpg' ) > -1 ? '.jpg' : image.name.search( '.jpeg' ) ? '.jpeg' : '.png'
+        image.title = image.name.split( image.extention )[ 0 ]
       })
+      console.log(images)
 
       setArtistsPath( path )
       setArtists( images )

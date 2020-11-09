@@ -1,16 +1,40 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import './index.sass'
 
 import IconButton from '../../common/icon-button'
+import Card from '../../common/card'
 
 import test_gray from '../../../resources/icons/test-gray.svg'
 import test_white from '../../../resources/icons/test-white.svg'
 
-const Player = ({ artists, listening, listening_lyrics, player_visibility, is_playing, setIsPlaying, playlist, lyricsStep, repeat, setRepeat }) => {
+const Player = ({ listening_artists, listening, listening_lyrics, player_visibility, is_playing, setIsPlaying, playlist, lyricsStep, repeat, setRepeat }) => {
 
   const [ gradient_value, setGradientValue ] = useState( 0 )
   const [ time, setTime ] = useState( 0 )
   const [ visible_playlist, setVisiblePlaylist ] = useState( false )
+  const [ visible_all_artists, setVisibleAllArtists ] = useState( false )
+
+  /*const getArtistCanvasImage = ( ) => {
+    let artist_canvas = document.getElementsByClassName( 'artists-canvas' )
+    let ctx = new Array( artist_canvas.length )
+    let img = new Array( artist_canvas.length )
+    //console.log( artist_canvas )
+    for( let i = 0; i < artist_canvas.length; i++ ) {
+      ctx[ i ] = artist_canvas[ i ].getContext( '2d' )
+      console.log( listening.meta.artists[ i ] )
+      img[ i ] = new Image( )
+      let index = artists.findIndex( art => {
+        let name = art.name.split( '.jpg' )
+        return name[ 0 ] === listening.meta.artists[ i ]
+      })
+      console.log( index )
+      console.log( artists )
+      img[ i ].src = artists[ index ].URI
+      console.log( img[ i ].src )
+      artist_canvas[ i ].height = artist_canvas[ i ].width = 250
+      ctx[ i ].drawImage( img[ i ], 0, 0, artist_canvas[ i ].width, artist_canvas[ i ].height )
+    }
+  }*/
 
   const toTimeFormat = time => {
     let hours, minutes, seconds, result = ''
@@ -104,12 +128,7 @@ const Player = ({ artists, listening, listening_lyrics, player_visibility, is_pl
     setIsPlaying( true )
   }
 
-  const getArtist = ( ) => artists[
-    artists.findIndex( art => {
-      let name = art.name.split( '.' )
-      return name[ 0 ] === listening.meta.artists[ 0 ]
-    })
-  ].URI
+  const getArtist = ( ) => listening_artists[ 0 ].URI
 
   const css = `
     #song-time-slider::-webkit-slider-runnable-track {
@@ -138,7 +157,20 @@ const Player = ({ artists, listening, listening_lyrics, player_visibility, is_pl
                     <span className = 'song-info-text'>{ listening.meta.title }</span>
                     <span className = 'song-info-text'>{ `${ listening.meta.artists.map( artist => artist ) }   |   ${ listening.meta.album }` }</span>
                   </div>
-                  { artists.length > 0 ? <img src = { getArtist( )} alt = 'test'/> : <img src = { test_gray } alt = 'test'/>  }
+                  <div className = 'song-info-artists-top-part'>
+                    { listening_artists.length > 0 ? <img src = { getArtist( )} alt = 'test'/> : <img src = { test_gray } alt = 'test'/>  }
+                    <button
+                      className = 'all-artists-btn'
+                      onClick = { e => {
+                        setVisibleAllArtists( !visible_all_artists )
+                        e.target.blur( )
+                      }}>
+                      <img
+                        src = { test_white }
+                        alt = 'artistas'
+                        title = 'Artistsas'/>
+                    </button>
+                  </div>
                 </div>
                 <div className = 'next-song'>
                   { playlist.length > 1 ?
@@ -189,6 +221,16 @@ const Player = ({ artists, listening, listening_lyrics, player_visibility, is_pl
                             e.target.blur( )
                           }}/>
                     </div>
+                  ))}
+                </div>
+                <div className = { `artists-viewer ${ visible_all_artists && player_visibility ? 'visible' : 'hidden' }` }>
+                  { listening_artists.map(( artist, i ) => (
+                    <Card
+                      key = { i }
+                      image = { artist.URI }
+                      alt = {[ artist.title ]}
+                      info = {[ artist.title ]}
+                      action = {( ) => console.log( 'to after' )}/>
                   ))}
                 </div>
               </div>

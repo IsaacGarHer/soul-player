@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import './index.sass'
 
 import ContextMenu from '../context-menu'
@@ -39,23 +39,29 @@ const Card = ({ cpn_class, cpn_id, cpn_name, image, alt, info, tab, action, topi
             action ? action( ) : console.log( 'card' )
             e.target.blur( )
           }}/>
-        <button
-          className = 'context-menu-btn-crd'
-          tabIndex = { tab ? tab : '-1' }
-          title = 'opciones'
-          onClick = { e => {
-            e.target.blur( )
-            setVisibleCXM( !visible_cxm )
-          }}>
-            <img
-              className = 'context-menu-icon-crd'
-              src = { test_gray }
-              alt = 'abrir menu contextual'/>
-        </button>
-        <ContextMenu
-          cpn_class = { `${ visible_cxm ? 'visible' : 'hidden' }` }
-          topics = { topics }
-          setVisibleCXM = { setVisibleCXM }/>
+        { topics ?
+          <Fragment>
+            <button
+              className = 'context-menu-btn-crd'
+              tabIndex = { tab ? tab : '-1' }
+              title = 'opciones'
+              onClick = { e => {
+                e.target.blur( )
+                setVisibleCXM( !visible_cxm )
+              }}>
+                <img
+                  className = 'context-menu-icon-crd'
+                  src = { test_gray }
+                  alt = 'abrir menu contextual'/>
+            </button>
+            <ContextMenu
+              cpn_class = { `${ visible_cxm ? 'visible' : 'hidden' }` }
+              topics = { topics }
+              setVisibleCXM = { setVisibleCXM }/>
+          </Fragment>
+          :
+          null
+        }
     </div>
   )
 }

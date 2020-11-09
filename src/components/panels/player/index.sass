@@ -58,9 +58,29 @@
               &:last-child
                 font-size: 14px
                 font-weight: 400
-          img
-            width: 80px
-            heught: 80px
+          .song-info-artists-top-part
+            display: flex
+            align-items: center
+            justify-content: flex-start
+            img
+              width: 80px
+              heught: 80px
+            .all-artists-btn
+              width: 35px
+              height: 80px
+              background: $full-dark
+              transition: 0.15s ease-in-out
+              display: flex
+              align-items: center
+              justify-content: center
+              border: none
+              &:hover
+                background: $high-detail
+              &:focus
+                background: $highlight
+                outline: none
+              img
+                width: 60%
         .next-song
           @include flex-cc
           width: 80px
@@ -170,6 +190,28 @@
                 outline: none
               &:hover, &:focus
                 box-shadow: 0px 0px 0px 2px inset $highlight
+        .artists-viewer
+          @include scroll-edit
+          @include absolute-space
+          @include flex-0c
+          justify-content: space-around
+          overflow-x: hidden
+          overflow-y: scroll
+          background: $base
+          transition: 0.15s ease-in-out
+          &.visible
+            visibility: visible
+            opacity: 1
+          &.hidden
+            visibility: hidden
+            opacity: 0
+          .card
+            width: calc( 40% )
+            .cover-crd
+              width: 100%
+            .info-crd
+              .text-crd
+                font-size: 1.3em
     .player-top-right
       width: 70vh
       height: 70vh
