@@ -146,10 +146,15 @@ const PlayerDataProviderPreview = ({ children, music_data }) => {
         if ( index < playlist.length - 1 )
           beforePlaying( playlist[ index + 1 ], false )
       if ( repeat === 1 ){
-        if ( index < playlist.length - 1 )
-          beforePlaying( playlist[ index + 1 ], false )
-        else
-          beforePlaying( playlist[ 0 ], false )
+        if ( playlist.length === 1 ) {
+          document.getElementById( 'mp3-player' ).play( )
+          setIsPlaying( true )
+        } else {
+          if ( index < playlist.length - 1 )
+            beforePlaying( playlist[ index + 1 ], false )
+          else
+            beforePlaying( playlist[ 0 ], false )
+        }
       }
       if ( repeat === 2 ) {
         document.getElementById( 'mp3-player' ).play( )

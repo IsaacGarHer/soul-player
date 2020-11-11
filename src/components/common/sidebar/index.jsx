@@ -1,4 +1,5 @@
 import React from 'react'
+import { PlayerDataConsumer } from '../../../context/player-data-context'
 import { ROUTES } from '../../../global/jsx/'
 import './index.sass'
 
@@ -7,7 +8,7 @@ import IconButton from '../icon-button'
 import test_gray from '../../../resources/icons/test-gray.svg'
 import test_white from '../../../resources/icons/test-white.svg'
 
-const Sidebar = ({ windowChanger, window, setWindow, player_visibility, setPlayerVisibility }) => (
+const SidebarPreview = ({ windowChanger, window, setWindow, player_data }) => (
   <div className = 'sidebar'>
     <div className = 'nav'>
       { ROUTES ?
@@ -28,11 +29,13 @@ const Sidebar = ({ windowChanger, window, setWindow, player_visibility, setPlaye
     </div>
     <IconButton
       title = 'reproductor'
-      action = {( ) => setPlayerVisibility( !player_visibility )}
+      action = {( ) => player_data.setPlayerVisibility( !player_data.player_visibility )}
       tab = '0'
-      icon = { player_visibility ? test_white : test_gray }
+      icon = { player_data.player_visibility ? test_white : test_gray }
       alt = 'player'/>
   </div>
 )
+
+const Sidebar = PlayerDataConsumer( SidebarPreview )
 
 export default Sidebar

@@ -18,6 +18,7 @@ const PlayerDataConsumer = Component => pr => (
 const Player = ( ) => (
     <PlayerDataContext.Consumer>
       { player_data =>
+        player_data.listening !== null ? 
         <Fragment>
           <style>{ player_data.css }</style>
           <div className = { `player ${ player_data.player_visibility ? 'viible' : 'hidden' }` }>
@@ -122,72 +123,82 @@ const Player = ( ) => (
                   alt = { player_data.listening.meta.album }/>
               </div>
             </div>
-          </div>
-          <div className = 'player-bottom'>
-            <div className = 'progress-bar'>
-              <span className = 'time-show'>{ `${player_data.time} / ${ player_data.listening.durationTimeFormat }` }</span>
-              <input
-                type = 'range'
-                min = '0'
-                max = '100'
-                step = '0.1'
-                id = 'song-time-slider'
-                onChange = { e => player_data.updateAudioTime( e.target, player_data.listening.duration, false ) }
-                onClick = { e => player_data.updateAudioTime( e.target, player_data.listening.duration, true ) }
-                className = 'song-time-slider'/>
-            </div>
-            <div className = 'player-controls'>
-              <div className = 'controls-left'>
-                <img
-                  className = 'test-icon'
-                  src = { test_gray }
-                  alt = { 'favorites' }
-                  title = 'Favoritos'/>
-                <img
-                  className = 'test-icon'
-                  src = { test_gray }
-                  alt = { 'equalizer' }
-                  title = 'Ecualizador'/>
+            <div className = 'player-bottom'>
+              <div className = 'progress-bar'>
+                <span className = 'time-show'>{ `${player_data.time} / ${ player_data.listening.durationTimeFormat }` }</span>
+                <input
+                  type = 'range'
+                  min = '0'
+                  max = '100'
+                  step = '0.1'
+                  id = 'song-time-slider'
+                  onChange = { e => player_data.updateAudioTime( e.target, player_data.listening.duration, false ) }
+                  onClick = { e => player_data.updateAudioTime( e.target, player_data.listening.duration, true ) }
+                  className = 'song-time-slider'/>
               </div>
-              <div className = 'controls-center'>
-                <IconButton
-                  icon = { test_gray }
-                  class = 'change-song-plr'
-                  alt = 'anterior'
-                  title = 'anterior'
-                  tab = '1'
-                  action = {( ) => player_data.changeSong( false )}/>
-                <IconButton
-                  icon = { player_data.is_playing ? test_gray : test_white }
-                  alt = 'play/puse'
-                  title = 'play/puse'
-                  tab = '1'
-                  action = {( ) => player_data.is_playing ? player_data.puaseMusic( ) : player_data.playMusic( )}/>
-                <IconButton
-                  icon = { test_gray }
-                  class = 'change-song-plr'
-                  alt = 'siguiente'
-                  title = 'siguiente'
-                  tab = '1'
-                  action = {( ) => player_data.changeSong( true )}/>
-              </div>
-              <div className = 'controls-right'>
-                <IconButton
-                  class = { `repeat-${ player_data.repeat }` }
-                  icon = { player_data.repeat === 0 ? test_gray : test_white }
-                  alt = 'no repetir/uno/todos'
-                  title = 'no repetir/uno/todos'
-                  tab = '1'
-                  action = {( ) => player_data.setRepeat( player_data.repeat === 0 ? 1 : player_data.repeat === 1 ? 2 : 0 )}/>
-                <img
-                  className = 'test-icon'
-                  src = { test_gray }
-                  alt = { 'shuffle' }
-                  title = 'Azar'/>
+              <div className = 'player-controls'>
+                <div className = 'controls-left'>
+                  <img
+                    className = 'test-icon'
+                    src = { test_gray }
+                    alt = { 'favorites' }
+                    title = 'Favoritos'/>
+                  <img
+                    className = 'test-icon'
+                    src = { test_gray }
+                    alt = { 'equalizer' }
+                    title = 'Ecualizador'/>
+                </div>
+                <div className = 'controls-center'>
+                  <IconButton
+                    icon = { test_gray }
+                    class = 'change-song-plr'
+                    alt = 'anterior'
+                    title = 'anterior'
+                    tab = '1'
+                    action = {( ) => player_data.changeSong( false )}/>
+                  <IconButton
+                    icon = { player_data.is_playing ? test_gray : test_white }
+                    alt = 'play/puse'
+                    title = 'play/puse'
+                    tab = '1'
+                    action = {( ) => player_data.is_playing ? player_data.puaseMusic( ) : player_data.playMusic( )}/>
+                  <IconButton
+                    icon = { test_gray }
+                    class = 'change-song-plr'
+                    alt = 'siguiente'
+                    title = 'siguiente'
+                    tab = '1'
+                    action = {( ) => player_data.changeSong( true )}/>
+                </div>
+                <div className = 'controls-right'>
+                  <IconButton
+                    class = { `repeat-${ player_data.repeat }` }
+                    icon = { player_data.repeat === 0 ? test_gray : test_white }
+                    alt = 'no repetir/uno/todos'
+                    title = 'no repetir/uno/todos'
+                    tab = '1'
+                    action = {( ) => player_data.setRepeat( player_data.repeat === 0 ? 1 : player_data.repeat === 1 ? 2 : 0 )}/>
+                  <img
+                    className = 'test-icon'
+                    src = { test_gray }
+                    alt = { 'shuffle' }
+                    title = 'Azar'/>
+                </div>
               </div>
             </div>
           </div>
         </Fragment>
+        :
+        <div style = {{
+          position: 'absolute',
+          top: '0',
+          left: '0',
+          width: '50vw',
+          height: '100vh',
+          background: '#000',
+          visibility: player_data.player_visibility ? 'visible' : 'hidden'
+        }}/>
       }
     </PlayerDataContext.Consumer>
 )

@@ -1,0 +1,307 @@
+@import ../../global/sass/colors
+@import ../../global/sass/mixins
+
+.player
+  @include flex-bc
+  width: 93vw
+  height: 96vh
+  padding: 2vh 1vw
+  background: $base
+  position: fixed
+  flex-direction: column
+  top: 0
+  left: 0
+  transition: 0.1s ease-in-out
+  z-index: 10
+  &.visible
+    visibility: visible
+    opacity: 1
+  &.hidden
+    visibility: hidden
+    opacity: 0
+  .audio-player
+    position: fixed
+    visibility: hidden
+  .player-top
+    @include flex-bc
+    width: 100%
+    height: 70vh
+    .player-top-left
+      @include flex-bc
+      width: calc( 100% - 74vh )
+      height: 100%
+      flex-direction: column
+      .player-info
+        width: 100%
+        display: flex
+        justify-content: space-between
+        .song-info
+          width: calc( 100% - 100px )
+          height: 80px
+          background: $full-dark
+          display: flex
+          align-items: center
+          justify-content: space-between
+          box-shadow: 0px 0px 0px 1px $highlight
+          .song-info-left
+            color: $highlight
+            display: flex
+            flex-direction: column
+            align-items: flex-start
+            justify-content: space-around
+            margin-left: 10px
+            .song-info-text
+              &:first-child
+                font-size: 20px
+                font-weight: 500
+                margin-bottom: 5px
+              &:last-child
+                font-size: 14px
+                font-weight: 400
+          .song-info-artists-top-part
+            display: flex
+            align-items: center
+            justify-content: flex-start
+            img
+              width: 80px
+              heught: 80px
+            .all-artists-btn
+              width: 35px
+              height: 80px
+              background: $full-dark
+              transition: 0.15s ease-in-out
+              display: flex
+              align-items: center
+              justify-content: center
+              border: none
+              &:hover
+                background: $high-detail
+              &:focus
+                background: $highlight
+                outline: none
+              img
+                width: 60%
+        .next-song
+          @include flex-cc
+          width: 80px
+          height: 80px
+          position: relative
+          .next-song-cover
+            width: 100%
+            height: 100%
+          .show-playlist
+            @include absolute-space
+            @include flex-cc
+            background: transparentize( $base, 0.5 )
+            border: none
+            &:focus, &:hover
+              outline: none
+              box-shadow: 0px 0px 0px 1px inset $highlight
+            img
+              height: 30%
+              margin-bottom: 5px
+      .lyrics-area
+        @include flex-cc
+        width: 100%
+        height: calc( 70vh - 120px )
+        position: relative
+        p
+          height: fit-content
+          background: none
+          //border: none
+          resize: none
+        #listening-lyrics
+          font-size: 1.7em
+          font-weight: 500
+          max-width: 80%
+          color: $highlight
+          text-align: center
+        .next-lyric
+          position: absolute
+          text-align: center
+          color: $high-detail
+          &:nth-child( 2 )
+            width: 70%
+            left: 15%
+            bottom: 15%
+            font-size: 1.1em
+          &:nth-child( 3 )
+            width: 70%
+            left: 15%
+            bottom: 0%
+            font-size: 0.9em
+        .playlist
+          @include scroll-edit
+          overflow-y: scroll
+          overflow-x: hidden
+          position: absolute
+          z-index: 20
+          top: 0
+          left: 0
+          background: $base
+          //box-shadow: 0px 0px 5px 1px transparentize( $highlight, 0.8 )
+          width: 100%
+          height: 100%
+          max-height: 100%
+          &.visible
+            visibility: visible
+            opacity: 1
+          &.hidden
+            visibility: hidden
+            opacity: 0
+          .playlist-song
+            @include flex-ss
+            width: 100%
+            height: 70px
+            position: relative
+            &.listening
+              background: transparentize( $highlight, 0.8 )
+            .playlist-song-cover
+              width: 70px
+              height: 70px
+              margin-right: 20px
+            .playlist-song-info
+              width: calc( 100% - 120px )
+              height: 100%
+              display: flex
+              flex-direction: column
+              align-items: flex-start
+              justify-content: center
+              span
+                color: $highlight
+                &:first-child
+                  margin-bottom: 3px
+                  font-size: 1em
+                &:last-child
+                  font-size: 0.8em
+            .playlist-song-number
+              @include flex-cc
+              width: 30px
+              height: 70px
+              color: $highlight
+            .player-song-selector
+              position: absolute
+              width: 100%
+              height: 100%
+              background: none
+              border: none
+              transition: 0.1s
+              &:focus
+                outline: none
+              &:hover, &:focus
+                box-shadow: 0px 0px 0px 2px inset $highlight
+        .artists-viewer
+          @include scroll-edit
+          @include absolute-space
+          @include flex-0c
+          justify-content: space-around
+          overflow-x: hidden
+          overflow-y: scroll
+          background: $base
+          transition: 0.15s ease-in-out
+          &.visible
+            visibility: visible
+            opacity: 1
+          &.hidden
+            visibility: hidden
+            opacity: 0
+          .card
+            width: calc( 40% )
+            .cover-crd
+              width: 100%
+            .info-crd
+              .text-crd
+                font-size: 1.3em
+    .player-top-right
+      width: 70vh
+      height: 70vh
+      .player-song-cover
+        width: 100%
+        height: 100%
+        box-shadow: 0px 0px 0px 2px $highlight
+  .player-bottom
+    @include flex-0c
+    justify-content: space-around
+    width: 100%
+    height: 26vh
+    flex-direction: column
+    .progress-bar
+      @include flex-ss
+      flex-direction: column
+      width: 100%
+      height: fit-content
+      .time-show
+        color: $highlight
+        font-size: 0.9em
+        margin-bottom: 10px
+      #song-time-slider
+        -webkit-appearance: none
+        background: transparent
+        width: 100%
+        &:focus
+          outline: none
+          &::-webkit-slider-thumb
+            box-shadow: 0px 0px 0px 4px  transparentize( $highlight, 0.5 )
+        &::-webkit-slider-thumb
+          -webkit-appearance: none
+          width: 18px
+          height: 18px
+          border-radius: 50%
+          background: $auxiliar
+          cursor: pointer
+          margin-top: -7px
+          box-shadow: 0px 0px 0px 0px  transparentize( $highlight, 0.5 )
+          transition: 0.1s ease-in-out
+          &:active
+            background: $auxiliar
+        &::-webkit-slider-runnable-track
+          width: 100%
+          height: 4px
+          cursor: pointer
+          border-radius: 10px
+          //background: linear-gradient( to right, #3739ed 50.44%,#fff 50.44%  )
+    .player-controls
+      @include flex-0c
+      justify-content: space-around
+      width: 100%
+      height: 12vh
+      .controls-left, .controls-center, .controls-right
+        @include flex-cc
+        width: fit-content
+        height: fit-content
+        .test-icon
+          width: 40px
+      .controls-left, .controls-right
+        .test-icon
+          &:first-child
+            margin-right: 10px
+      .controls-center
+        .icon-button
+          width: 55px
+          margin: 0 20px
+        .icon-button
+          &.change-song-plr
+            width: 40px
+            margin: 0
+      .controls-right
+        .icon-button
+          width: 40px
+          &:first-child
+            margin-right: 20px
+          &.repeat-2
+            position: relative
+            &::after
+              @include flex-cc
+              position: absolute
+              font-family: 'Roboto'
+              font-weight: 900
+              font-size: 0.9em
+              width: 20px
+              height: 20px
+              color: $base
+              background: $highlight
+              border-radius: 50%
+              text-align: center
+              content: '1'
+              bottom: 90%
+              left: 90%

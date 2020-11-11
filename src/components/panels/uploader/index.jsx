@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import * as mmb from 'music-metadata-browser'
+import { MusicDataConsumer } from '../../../context/music-data-context'
 import './index.sass'
 
 import MainButton from '../../common/main-button'
 import IconButton from '../../common/icon-button'
 
-const Uploader = ({ setSongs, setLyrics, setArtists }) => {
+const UploaderPreview = ({ music_data }) => {
 
   const [ visible, setVisibility ] = useState( true )
   const [ songs_path, setSongsPath ] = useState( '' )
@@ -48,7 +49,7 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
       })
 
       if( lyrics.length > 0 )
-        setLyrics( lyrics )
+        music_data.setLyrics( lyrics )
 
       return songs.length > 0 ? songs : files
     } else
@@ -183,7 +184,7 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
 
       optimizerOfWork( songs_uploaded )
       .then( songs => {
-        setSongs( songs )
+        music_data.setSongs( songs )
         setSongsPath( path )
       })
       .catch( err => console.log( err ))
@@ -205,7 +206,7 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
       console.log(images)
 
       setArtistsPath( path )
-      setArtists( images )
+      music_data.setArtists( images )
     }
   }
 
@@ -273,5 +274,7 @@ const Uploader = ({ setSongs, setLyrics, setArtists }) => {
     </div>
   )
 }
+
+const Uploader = MusicDataConsumer( UploaderPreview )
 
 export default Uploader
