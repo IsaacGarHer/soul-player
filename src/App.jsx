@@ -1,5 +1,8 @@
 import React, { Fragment, useState } from 'react'
 import { ROUTES } from './global/jsx'
+import { MusicDataConsumer } from './context/music-data-context'
+import { PlayerDataConsumer } from './context/player-data-context'
+
 import './App.sass'
 
 import Sidebar from './components/common/sidebar'
@@ -9,7 +12,7 @@ import Artists from './components/windows/artists'
 import Uploader from './components/panels/uploader'
 import Player from './components/panels/player'
 
-const App = ( ) => {
+const AppPreview = ( ) => {
 
   const [ window, setWindow ] = useState( ROUTES[ 0 ] )
   const [ songs, setSongs ] = useState([ ])
@@ -125,8 +128,11 @@ const App = ( ) => {
         lyricsStep = { lyricsStep }
         repeat = { repeat }
         setRepeat = { setRepeat }/>
-    </Fragment>
+    </Fragment>  
   )
 }
+
+const AppPlayer = PlayerDataConsumer( AppPreview )
+const App = MusicDataConsumer( AppPlayer )
 
 export default App

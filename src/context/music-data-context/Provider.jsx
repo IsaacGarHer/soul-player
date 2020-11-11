@@ -1,24 +1,25 @@
 import React, { useState } from 'react'
 import MusicDataContext from './Context'
-import ROUTES from '../global/jsx'
 
-const MusicDataProvider = pr => {
+const MusicDataProvider = ({ children }) => {
 
   const [ songs, setSongs ] = useState([ ])
   const [ lyrics, setLyrics ] = useState([ ])
   const [ artists, setArtists ] = useState([ ])
 
+  const value = {
+    songs: songs,
+    lyrics: lyrics,
+    artists: artists,
+    setSongs: setSongs,
+    setLyrics: setLyrics,
+    setArtists: setArtists
+  }
+
   return (
     <MusicDataContext.Provider
-      value = {{
-        songs: songs,
-        lyrics: lyrics,
-        artists: artists,
-        setSongs: setSongs,
-        setLyrics: setLyrics,
-        setArtists: setArtists
-      }}>
-        { pr.children }
+      value = { value }>
+        { children }
     </MusicDataContext.Provider>
   )
 }

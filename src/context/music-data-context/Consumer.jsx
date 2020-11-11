@@ -3,7 +3,7 @@ import MusicDataContext from './Context'
 
 const MusicDataConsumer = Component => pr => (
   <MusicDataContext.Consumer>
-    { data => <Component { ...pr } data = { data }/> }
+    { music_data => <Component { ...pr } music_data = { music_data }/> }
   </MusicDataContext.Consumer>
 ) 
 

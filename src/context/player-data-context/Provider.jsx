@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import PlayerContext from './Context'
+import MusicDataConsumer from '../music-data-context/Consumer'
 
-const PlayerDataProvider = pr => {
+const PlayerDataProviderPreview = ({ children, music_data }) => {
 
   const [ is_playing, setIsPlaying ] = useState( false )
   const [ repeat, setRepeat ] = useState( 0 )
@@ -9,7 +10,7 @@ const PlayerDataProvider = pr => {
   const [ player_visibility, setPlayerVisibility ] = useState( false )
   const [ listening_lyrics, setListeningLyrics ] = useState([ ])
   const [ listening_artists, setListeningArtists ] = useState([ ])
-  const [ main_playlist, setMainPlaylist ] = useState([ ])
+  const [ playlist, setPlaylist ] = useState([ ])
   const [ gradient_value, setGradientValue ] = useState( 0 )
   const [ time, setTime ] = useState( 0 )
   const [ playlist_visibility, setPlaylistVisibility ] = useState( false )
@@ -54,7 +55,7 @@ const PlayerDataProvider = pr => {
 
       let new_listening_artists = [ ]
       song.meta.artists.forEach( song_artist => {
-        new_listening_artists.push( artists[ artists.findIndex( art => art.title === song_artist ) ] )
+        new_listening_artists.push( music_data.artists[ music_data.artists.findIndex( art => art.title === song_artist ) ] )
       })
       setListeningArtists( new_listening_artists )
 
@@ -64,7 +65,7 @@ const PlayerDataProvider = pr => {
       setListeningLyrics( new_lyrics )
       setListening( song )
     }
-    lyrics_file.readAsText( lyrics[ lyrics.findIndex( lyric => lyric.name === lyric_name )])
+    lyrics_file.readAsText( music_data.lyrics[ music_data.lyrics.findIndex( lyric => lyric.name === lyric_name )])
   }
 
   const removeSong = song => {
@@ -175,44 +176,50 @@ const PlayerDataProvider = pr => {
     }
   `
 
+  const value = {
+    listening: listening,
+    player_visibility: player_visibility,
+    listening_lyrics: listening_lyrics,
+    listening_artists: listening_artists,
+    playlist: playlist,
+    is_playing: is_playing,
+    repeat: repeat,
+    gradient_value: gradient_value,
+    time: time,
+    playlist_visibility: playlist_visibility,
+    all_artists_visibility: all_artists_visibility,
+    css: css,
+    setListening: setListening,
+    setPlayerVisibility: setPlayerVisibility,
+    setListeningLyrics: setListeningLyrics,
+    setListeningArtists: setListeningArtists,
+    setPlaylist: setPlaylist,
+    setIsPlaying: setIsPlaying,
+    setRepeat: setRepeat,
+    setGradientValue: setGradientValue,
+    setTime: setTime,
+    setPlaylistVisibility: setPlaylistVisibility,
+    setAllArtistsVisibility: setAllArtistsVisibility,
+    beforePlaying: beforePlaying,
+    removeSong: removeSong,
+    toTimeFormat: toTimeFormat,
+    changeSong: changeSong,
+    updateRangeValue: updateRangeValue,
+    updateAudioTime: updateAudioTime,
+    toEnd: toEnd,
+    puaseMusic: puaseMusic,
+    playMusic: playMusic,
+    getArtist: getArtist
+  }
+
   return (
     <PlayerContext.Provider
-      value = {{
-        listening: listening,
-        player_visibility: player_visibility,
-        listening_lyrics: listening_lyrics,
-        listening_artists: listening_artists,
-        main_playlist: main_playlist,
-        is_playing: is_playing,
-        repeat: repeat,
-        gradient_value: gradient_value,
-        time: time,
-        playlist_visibility: playlist_visibility,
-        all_artists_visibility: all_artists_visibility,
-        css: css,
-        setListening: setListening,
-        setPlayerVisibility: setPlayerVisibility,
-        setListeningLyrics: setListeningLyrics,
-        setListeningArtists: setListeningArtists,
-        setMainPlaylist: setMainPlaylist,
-        setIsPlaying: setIsPlaying,
-        setRepeat: setRepeat,
-        setGradientValue: setGradientValue,
-        setTime: setTime,
-        setPlaylistVisibility: setPlaylistVisibility,
-        setAllArtistsVisibility: setAllArtistsVisibility,
-        toTimeFormat: toTimeFormat,
-        changeSong: changeSong,
-        updateRangeValue: updateRangeValue,
-        updateAudioTime: updateAudioTime,
-        toEnd: toEnd,
-        puaseMusic: puaseMusic,
-        playMusic: playMusic,
-        getArtist: getArtist
-      }}>
-        { pr.children }
+      value = { value }>
+        { children }
     </PlayerContext.Provider>
   )
 }
+
+const PlayerDataProvider = MusicDataConsumer( PlayerDataProviderPreview )
 
 export default PlayerDataProvider
