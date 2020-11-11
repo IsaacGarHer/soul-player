@@ -1,11 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App.jsx'
+import { MusicDataProvider } from './context/music-data-context'
+import { PlayerDataProvider } from './context/player-data-context'
 import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <MusicDataProvider>
+      <PlayerDataProvider>
+        <App />
+      </PlayerDataProvider>
+    </MusicDataProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

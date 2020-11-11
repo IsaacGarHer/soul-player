@@ -1,0 +1,218 @@
+import React, { useState } from 'react'
+import PlayerContext from './Context'
+
+const PlayerDataProvider = pr => {
+
+  const [ is_playing, setIsPlaying ] = useState( false )
+  const [ repeat, setRepeat ] = useState( 0 )
+  const [ listening, setListening ] = useState( null )
+  const [ player_visibility, setPlayerVisibility ] = useState( false )
+  const [ listening_lyrics, setListeningLyrics ] = useState([ ])
+  const [ listening_artists, setListeningArtists ] = useState([ ])
+  const [ main_playlist, setMainPlaylist ] = useState([ ])
+  const [ gradient_value, setGradientValue ] = useState( 0 )
+  const [ time, setTime ] = useState( 0 )
+  const [ playlist_visibility, setPlaylistVisibility ] = useState( false )
+  const [ all_artists_visibility, setAllArtistsVisibility ] = useState( false )
+
+  const beforePlaying = ( song, new_song ) => {
+    let parts_name = song.name.split( '.' )
+    parts_name[ 1 ] = 'lrc'
+    let lyric_name = parts_name.join( '.' )
+
+    let lyrics_file = new FileReader( )
+    lyrics_file.onload = e => {
+      let content = e.target.result
+      let new_lyrics = [ ]
+      content = content.split( '\n' )
+      content.splice( 0, 6 )
+      content.splice( content.length - 2, 1 )
+      content.splice( content.length - 1, 1 )
+      for ( let i = 0; i < content.length; i++ ) {
+        if ( content[ i ] !== undefined ) {
+          if ( content[ i ].charAt( 0 ) === '[' ) {
+            if ( content[ i ].length > 11 )
+              new_lyrics.push({
+                time: content[ i ].substring( 1, 9 ),
+                text: content[ i ].substring( 11, content[ i ].length )
+              })
+            else
+              new_lyrics.push({
+                time: content[ i ].substring( 1, 9 ),
+                text: ' '
+              })
+          } else {
+            new_lyrics[ new_lyrics.length - 1 ].text += `\n${ content[ i ] }`
+            content.splice( i, 1 )
+            i--
+          }
+        }
+      }
+      new_lyrics.forEach( nl => {
+        nl.time = Math.round(( Number( nl.time.substring( 3, 8 )) + Number( nl.time.substring( 0, 2 )) * 60 ) * 100 ) / 100
+      })
+
+      let new_listening_artists = [ ]
+      song.meta.artists.forEach( song_artist => {
+        new_listening_artists.push( artists[ artists.findIndex( art => art.title === song_artist ) ] )
+      })
+      setListeningArtists( new_listening_artists )
+
+      if ( new_song )
+        setPlaylist([ song ])
+      setIsPlaying( true )
+      setListeningLyrics( new_lyrics )
+      setListening( song )
+    }
+    lyrics_file.readAsText( lyrics[ lyrics.findIndex( lyric => lyric.name === lyric_name )])
+  }
+
+  const removeSong = song => {
+    let i = playlist.findIndex( song_pls => song_pls.meta.title === song.meta.title )
+    if ( i > -1 && listening.meta.title !== playlist[ i ].meta.title ) {
+      playlist.splice( i, 1 )
+      setPlaylist( playlist )
+    }
+  }
+
+  const changeSong = next => {
+    if ( playlist.length > 0 ) {
+      let index = playlist.findIndex( song => song.meta.title === listening.meta.title )
+      if ( index > -1 ) {
+        if ( next ) {
+          if ( index === playlist.length - 1 )
+            beforePlaying( playlist[ 0 ], false )
+          else
+            beforePlaying( playlist[ index + 1 ], false )
+        } else {
+          console.log( index )
+          if ( index === 0 )
+            beforePlaying( playlist[ playlist.length - 1 ], false )
+          else
+            beforePlaying( playlist[ index - 1 ], false )
+        }
+      }
+    }
+  }
+
+  const toTimeFormat = time => {
+    let hours, minutes, seconds, result = ''
+    if ( time > 3600 ){
+      hours = Math.floor( time / 3600 )
+      time = time % 3600
+      result = `${ hours }:`
+    } if ( time > 60 ){
+      minutes = Math.floor( time / 60 )
+      time = time % 60
+      result = `${ result }${ minutes < 10 ? `0${ minutes }` : minutes }:`
+    }
+    seconds = Math.round( time )
+    result = `${ result }${ minutes === undefined ? '00:' : '' }${ seconds < 10 ? `0${ seconds }` : seconds }`
+    return result
+  }
+
+  const updateRangeValue = ( ct, duration ) => {
+    document.getElementById( 'song-time-slider' ).value = ct * 100 / duration
+    let position
+    if ( listening_lyrics.length > 0 ) {
+      for ( let i = 0; i < listening_lyrics.length; i++ ) {
+        if (  ct >= listening_lyrics[ i ].time )
+          position = i
+        else
+          break
+      }
+      document.getElementById( 'listening-lyrics' ).innerText = listening_lyrics[ position ].text
+      document.getElementById( 'listening-lyrics-01' ).innerText = listening_lyrics[ position + 1 ] !== undefined ? listening_lyrics[ position + 1 ].text : ''
+      document.getElementById( 'listening-lyrics-02' ).innerText = listening_lyrics[ position + 2 ] !== undefined ? listening_lyrics[ position + 2 ].text : ''
+    }
+    setGradientValue( Math.round(( ct * 100 / duration ) * 100 ) / 100 )
+    setTime( toTimeFormat( ct ))
+  }
+
+  const updateAudioTime = ( target, duration, click ) =>{
+    document.getElementById( 'mp3-player' ).currentTime = target.value * duration / 100
+    setGradientValue( target.value )
+    setTime( toTimeFormat( target.value * duration / 100 ))
+    if ( click )
+      target.blur( )
+  }
+
+  const toEnd = ( ) => {
+    setIsPlaying( false )
+    if ( playlist.length > 0 ){
+      let index = playlist.findIndex( song => song.name === listening.name )
+      if ( repeat === 0 )
+        if ( index < playlist.length - 1 )
+          beforePlaying( playlist[ index + 1 ], false )
+      if ( repeat === 1 ){
+        if ( index < playlist.length - 1 )
+          beforePlaying( playlist[ index + 1 ], false )
+        else
+          beforePlaying( playlist[ 0 ], false )
+      }
+      if ( repeat === 2 ) {
+        document.getElementById( 'mp3-player' ).play( )
+        setIsPlaying( true )
+      }
+    }
+  }
+
+  const puaseMusic = ( ) => {
+    document.getElementById( 'mp3-player' ).pause( )
+    setIsPlaying( false )
+  }
+
+  const playMusic = ( ) => {
+    document.getElementById( 'mp3-player' ).play( )
+    setIsPlaying( true )
+  }
+
+  const getArtist = ( ) => listening_artists[ 0 ].URI
+
+  const css = `
+    #song-time-slider::-webkit-slider-runnable-track {
+      background: linear-gradient( to right, #3739ed ${ gradient_value }%, #fff ${ gradient_value }% );
+    }
+  `
+
+  return (
+    <PlayerContext.Provider
+      value = {{
+        listening: listening,
+        player_visibility: player_visibility,
+        listening_lyrics: listening_lyrics,
+        listening_artists: listening_artists,
+        main_playlist: main_playlist,
+        is_playing: is_playing,
+        repeat: repeat,
+        gradient_value: gradient_value,
+        time: time,
+        playlist_visibility: playlist_visibility,
+        all_artists_visibility: all_artists_visibility,
+        css: css,
+        setListening: setListening,
+        setPlayerVisibility: setPlayerVisibility,
+        setListeningLyrics: setListeningLyrics,
+        setListeningArtists: setListeningArtists,
+        setMainPlaylist: setMainPlaylist,
+        setIsPlaying: setIsPlaying,
+        setRepeat: setRepeat,
+        setGradientValue: setGradientValue,
+        setTime: setTime,
+        setPlaylistVisibility: setPlaylistVisibility,
+        setAllArtistsVisibility: setAllArtistsVisibility,
+        toTimeFormat: toTimeFormat,
+        changeSong: changeSong,
+        updateRangeValue: updateRangeValue,
+        updateAudioTime: updateAudioTime,
+        toEnd: toEnd,
+        puaseMusic: puaseMusic,
+        playMusic: playMusic,
+        getArtist: getArtist
+      }}>
+        { pr.children }
+    </PlayerContext.Provider>
+  )
+}
+
+export default PlayerDataProvider
