@@ -17,8 +17,9 @@ const PlayerDataProviderPreview = ({ children, music_data }) => {
   const [ all_artists_visibility, setAllArtistsVisibility ] = useState( false )
 
   const beforePlaying = ( song, new_song ) => {
-    let parts_name = song.name.split( '.' )
-    parts_name[ 1 ] = 'lrc'
+    let parts_name = [ ]
+    parts_name.push( song.name.split( '.mp3' )[ 0 ] )
+    parts_name.push( 'lrc' )
     let lyric_name = parts_name.join( '.' )
 
     let lyrics_file = new FileReader( )

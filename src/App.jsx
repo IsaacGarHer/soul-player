@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import { ROUTES } from './global/jsx'
-import { MusicDataConsumer } from './context/music-data-context'
+import MusicDataUploader, { MusicDataConsumer } from './context/music-data-context'
 import Player, { PlayerDataConsumer } from './context/player-data-context'
 
 import './App.sass'
@@ -9,7 +9,7 @@ import Sidebar from './components/common/sidebar'
 import Home from './components/windows/home'
 import Songs from './components/windows/songs'
 import Artists from './components/windows/artists'
-import Uploader from './components/panels/uploader'
+//import Uploader from './components/panels/uploader'
 
 const AppPreview = ( ) => {
 
@@ -36,7 +36,7 @@ const AppPreview = ( ) => {
         windowChanger = { windowChanger }
         window = { window }
         setWindow = { setWindow }/>
-      <Uploader />
+      <MusicDataUploader/>
       <Player />
     </Fragment>  
   )
