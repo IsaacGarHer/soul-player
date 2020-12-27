@@ -1,0 +1,10 @@
+!important - fix bug in songs viewer
+arreglar posible bug al leer los lyrics
+optimizacion al cargar las canciones
+abrir desde carpeta
+animacion de lyrics
+moverte en songs con flechas
+utilizar canvar para la redimension de imagenes
+obtener metadata de imagen
+crear componentes reutilizables
+crear mis propios hooks
