@@ -16,20 +16,55 @@ const PlayerDataProviderPreview = ({ children, music_data }) => {
   const [ playlist_visibility, setPlaylistVisibility ] = useState( false )
   const [ all_artists_visibility, setAllArtistsVisibility ] = useState( false )
 
+  const assigners = ( song, new_song ) => {
+    let new_listening_artists = [ ]
+    song.meta.artists.forEach( song_artist => {
+      new_listening_artists.push( music_data.artists[ music_data.artists.findIndex( art => art.title === song_artist ) ] )
+    })
+    setListeningArtists( new_listening_artists )
+
+    if ( new_song )
+      setPlaylist([ song ])
+    setIsPlaying( true )
+    setListening( song )
+  }
+
   const beforePlaying = ( song, new_song ) => {
+    let lyrics_file_selected
     let parts_name = [ ]
     parts_name.push( song.name.split( '.mp3' )[ 0 ] )
     parts_name.push( 'lrc' )
     let lyric_name = parts_name.join( '.' )
 
     let lyrics_file = new FileReader( )
+    
     lyrics_file.onload = e => {
       let content = e.target.result
       let new_lyrics = [ ]
+      let jumps = 0, object_searched = '[00:00.00]'
       content = content.split( '\n' )
-      content.splice( 0, 6 )
-      content.splice( content.length - 2, 1 )
-      content.splice( content.length - 1, 1 )
+      for( let i = 0; i < content.length; i++ ){
+        let test = content[ i ].includes( object_searched )
+        //console.log(test, object_searched, content[ i ])
+        if( content[ i ].includes( object_searched ))
+          break
+        else
+          jumps++
+      }
+      //console.log( jumps )
+      content.splice( 0, jumps )
+      //console.log( content )
+      jumps = 0
+      for( let i = content.length - 1; i >= 0; i-- ){
+        if( !content[ i ].includes( '[' ) )
+          jumps++
+        else {
+          content.splice( i + 1, jumps )
+          break
+        }
+      }
+      //console.log( 'aqui' )
+      //console.log( content )
       for ( let i = 0; i < content.length; i++ ) {
         if ( content[ i ] !== undefined ) {
           if ( content[ i ].charAt( 0 ) === '[' ) {
@@ -54,19 +89,22 @@ const PlayerDataProviderPreview = ({ children, music_data }) => {
         nl.time = Math.round(( Number( nl.time.substring( 3, 8 )) + Number( nl.time.substring( 0, 2 )) * 60 ) * 100 ) / 100
       })
 
-      let new_listening_artists = [ ]
-      song.meta.artists.forEach( song_artist => {
-        new_listening_artists.push( music_data.artists[ music_data.artists.findIndex( art => art.title === song_artist ) ] )
-      })
-      setListeningArtists( new_listening_artists )
-
-      if ( new_song )
-        setPlaylist([ song ])
-      setIsPlaying( true )
+      assigners( song, new_song )
+      console.log( new_lyrics )
       setListeningLyrics( new_lyrics )
-      setListening( song )
     }
-    lyrics_file.readAsText( music_data.lyrics[ music_data.lyrics.findIndex( lyric => lyric.name === lyric_name )])
+    lyrics_file_selected = music_data.lyrics[ music_data.lyrics.findIndex( lyric => lyric.name === lyric_name )]
+    if( lyrics_file_selected === undefined ){
+      assigners( song, new_song )
+      setListeningLyrics([
+        {
+          time: 0,
+          text: "♫"
+        }
+      ])
+    }else
+      lyrics_file.readAsText( lyrics_file_selected )
+
   }
 
   const removeSong = song => {

@@ -202,7 +202,7 @@ const MusicDataProvider = ({ children }) => {
         image.extention = image.name.search( '.jpg' ) > -1 ? '.jpg' : image.name.search( '.jpeg' ) ? '.jpeg' : '.png'
         image.title = image.name.split( image.extention )[ 0 ]
       })
-      console.log(images)
+      //console.log(images)
 
       setArtistsPath( path )
       setArtists( images )
