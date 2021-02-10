@@ -28,6 +28,9 @@ const Player = ( ) => (
               className = 'audio-player'
               id = 'mp3-player'
               autoPlay
+              onLoadStart = { ( ) => {
+                document.getElementById( 'mp3-player' ).volume = player_data.volume_value / 100
+              }}
               onEnded = {( ) => player_data.toEnd( ) }
               onTimeUpdate = { e => player_data.updateRangeValue( e.target.currentTime, player_data.listening.duration )}/>
             <div className = 'player-top'>
@@ -141,13 +144,28 @@ const Player = ( ) => (
                   <img
                     className = 'test-icon'
                     src = { test_gray }
-                    alt = { 'favorites' }
-                    title = 'Favoritos'/>
-                  <img
-                    className = 'test-icon'
-                    src = { test_gray }
                     alt = { 'equalizer' }
                     title = 'Ecualizador'/>
+                  <IconButton
+                    class = { `volume-control ${ player_data.volume_control_visibility ? 'active' : 'disable' }` }
+                    icon = { player_data.volume_control_visibility ? test_white : test_gray }
+                    action = {( ) => player_data.setVolumeControlVisibility( !player_data.volume_control_visibility )}
+                    tab = '1'
+                    alt = 'control de volumen'
+                    title = 'Volumen'/>
+                  <div
+                    className = 'volume-control-continer'>
+                    <input
+                      className = 'volume-control-slider'
+                      onChange = { e => player_data.updateVolumeSong( e.target, false ) }
+                      onClick = { e => player_data.updateVolumeSong( e.target, false ) }
+                      type = 'range'
+                      min = '0'
+                      max = '100'
+                      step = '1'
+                      defaultValue = { player_data.volume_value }
+                      id = 'volume-slider'/>
+                  </div>
                 </div>
                 <div className = 'controls-center'>
                   <IconButton

@@ -15,6 +15,8 @@ const PlayerDataProviderPreview = ({ children, music_data }) => {
   const [ time, setTime ] = useState( 0 )
   const [ playlist_visibility, setPlaylistVisibility ] = useState( false )
   const [ all_artists_visibility, setAllArtistsVisibility ] = useState( false )
+  const [ volume_control_visibility, setVolumeControlVisibility ] = useState( false )
+  const [ volume_value, setVolumeValue ] = useState( localStorage.getItem( 'volume' ) === null ? 100 : localStorage.getItem( 'volume' ) )
 
   const assigners = ( song, new_song ) => {
     let new_listening_artists = [ ]
@@ -169,11 +171,18 @@ const PlayerDataProviderPreview = ({ children, music_data }) => {
     setTime( toTimeFormat( ct ))
   }
 
-  const updateAudioTime = ( target, duration, click ) =>{
+  const updateAudioTime = ( target, duration, click ) => {
     document.getElementById( 'mp3-player' ).currentTime = target.value * duration / 100
     setGradientValue( target.value )
     setTime( toTimeFormat( target.value * duration / 100 ))
     if ( click )
+      target.blur( )
+  }
+
+  const updateVolumeSong = ( target, click ) => {
+    document.getElementById( 'mp3-player' ).volume = target.value / 100
+    localStorage.setItem( 'volume', target.value )
+    if( click )
       target.blur( )
   }
 
@@ -232,6 +241,8 @@ const PlayerDataProviderPreview = ({ children, music_data }) => {
     time: time,
     playlist_visibility: playlist_visibility,
     all_artists_visibility: all_artists_visibility,
+    volume_control_visibility: volume_control_visibility,
+    volume_value: volume_value,
     css: css,
     setListening: setListening,
     setPlayerVisibility: setPlayerVisibility,
@@ -244,6 +255,9 @@ const PlayerDataProviderPreview = ({ children, music_data }) => {
     setTime: setTime,
     setPlaylistVisibility: setPlaylistVisibility,
     setAllArtistsVisibility: setAllArtistsVisibility,
+    setVolumeControlVisibility: setVolumeControlVisibility,
+    setVolumeValue: setVolumeValue,
+    updateVolumeSong: updateVolumeSong,
     beforePlaying: beforePlaying,
     removeSong: removeSong,
     toTimeFormat: toTimeFormat,
