@@ -44,7 +44,7 @@ const PlayerDataProviderPreview = ({ children, music_data }) => {
       let jumps = 0, object_searched = '[00:00.00]'
       content = content.split( '\n' )
       for( let i = 0; i < content.length; i++ ){
-        let test = content[ i ].includes( object_searched )
+        //let test = content[ i ].includes( object_searched )
         //console.log(test, object_searched, content[ i ])
         if( content[ i ].includes( object_searched ))
           break

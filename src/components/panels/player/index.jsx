@@ -13,6 +13,7 @@ const Player = ({ listening_artists, listening, listening_lyrics, player_visibil
   const [ time, setTime ] = useState( 0 )
   const [ visible_playlist, setVisiblePlaylist ] = useState( false )
   const [ visible_all_artists, setVisibleAllArtists ] = useState( false )
+  const [ volume_control_viibility, setVolumeControlVisibility ] = useState( false )
 
   /*const getArtistCanvasImage = ( ) => {
     let artist_canvas = document.getElementsByClassName( 'artists-canvas' )
@@ -260,13 +261,15 @@ const Player = ({ listening_artists, listening, listening_lyrics, player_visibil
                 <img
                   className = 'test-icon'
                   src = { test_gray }
-                  alt = { 'favorites' }
-                  title = 'Favoritos'/>
-                <img
-                  className = 'test-icon'
-                  src = { test_gray }
                   alt = { 'equalizer' }
                   title = 'Ecualizador'/>
+                <IconButton
+                  class = { `volume-control ${ volume_control_viibility ? 'active' : 'disable' }` }
+                  icon = { volume_control_viibility ? test_gray : test_white }
+                  alt = { 'control de volumen' }
+                  title = 'Volumen'
+                  tab = '1'
+                  action = {( ) => setVolumeControlVisibility( !volume_control_viibility )}/>
               </div>
               <div className = 'controls-center'>
                 <IconButton
