@@ -15,7 +15,7 @@ const PlayerDataProviderPreview = ({ children, music_data }) => {
   const [ time, setTime ] = useState( 0 )
   const [ playlist_visibility, setPlaylistVisibility ] = useState( false )
   const [ all_artists_visibility, setAllArtistsVisibility ] = useState( false )
-  const [ volume_control_visibility, setVolumeControlVisibility ] = useState( false )
+  const [ mute, setMute ] = useState( false )
   const [ volume_value, setVolumeValue ] = useState( localStorage.getItem( 'volume' ) === null ? 100 : localStorage.getItem( 'volume' ) )
 
   const assigners = ( song, new_song ) => {
@@ -179,8 +179,10 @@ const PlayerDataProviderPreview = ({ children, music_data }) => {
       target.blur( )
   }
 
-  const updateVolumeSong = ( target, click ) => {
+  const updateVolumeSong = ( target, click, change ) => {
     document.getElementById( 'mp3-player' ).volume = target.value / 100
+    if( change )
+      setVolumeValue( target.value )
     localStorage.setItem( 'volume', target.value )
     if( click )
       target.blur( )
@@ -227,6 +229,9 @@ const PlayerDataProviderPreview = ({ children, music_data }) => {
     #song-time-slider::-webkit-slider-runnable-track {
       background: linear-gradient( to right, #3739ed ${ gradient_value }%, #fff ${ gradient_value }% );
     }
+    #volume-slider::-webkit-slider-runnable-track {
+      background: linear-gradient( to right, #3739ed ${ volume_value }%, #fff ${ volume_value }% );
+    }
   `
 
   const value = {
@@ -241,7 +246,7 @@ const PlayerDataProviderPreview = ({ children, music_data }) => {
     time: time,
     playlist_visibility: playlist_visibility,
     all_artists_visibility: all_artists_visibility,
-    volume_control_visibility: volume_control_visibility,
+    mute: mute,
     volume_value: volume_value,
     css: css,
     setListening: setListening,
@@ -255,7 +260,7 @@ const PlayerDataProviderPreview = ({ children, music_data }) => {
     setTime: setTime,
     setPlaylistVisibility: setPlaylistVisibility,
     setAllArtistsVisibility: setAllArtistsVisibility,
-    setVolumeControlVisibility: setVolumeControlVisibility,
+    setMute: setMute,
     setVolumeValue: setVolumeValue,
     updateVolumeSong: updateVolumeSong,
     beforePlaying: beforePlaying,

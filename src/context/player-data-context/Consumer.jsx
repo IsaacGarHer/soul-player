@@ -28,9 +28,8 @@ const Player = ( ) => (
               className = 'audio-player'
               id = 'mp3-player'
               autoPlay
-              onLoadStart = { ( ) => {
-                document.getElementById( 'mp3-player' ).volume = player_data.volume_value / 100
-              }}
+              onLoadStart = { e => e.target.volume = player_data.volume_value / 100 }
+              onEnded = { e => player_data.setVolumeValue( e.target.volume ) }
               onEnded = {( ) => player_data.toEnd( ) }
               onTimeUpdate = { e => player_data.updateRangeValue( e.target.currentTime, player_data.listening.duration )}/>
             <div className = 'player-top'>
@@ -147,18 +146,21 @@ const Player = ( ) => (
                     alt = { 'equalizer' }
                     title = 'Ecualizador'/>
                   <IconButton
-                    class = { `volume-control ${ player_data.volume_control_visibility ? 'active' : 'disable' }` }
-                    icon = { player_data.volume_control_visibility ? test_white : test_gray }
-                    action = {( ) => player_data.setVolumeControlVisibility( !player_data.volume_control_visibility )}
+                    class = { `volume-control mute-${ player_data.mute ? 'active' : 'disable' }` }
+                    icon = { player_data.mute ? test_white : test_gray }
+                    action = {( ) => {
+                      document.getElementById( 'mp3-player' ).muted = !player_data.mute
+                      player_data.setMute( !player_data.mute )
+                    }}
                     tab = '1'
                     alt = 'control de volumen'
                     title = 'Volumen'/>
                   <div
-                    className = 'volume-control-continer'>
+                    className = 'volume-control-container'>
                     <input
                       className = 'volume-control-slider'
-                      onChange = { e => player_data.updateVolumeSong( e.target, false ) }
-                      onClick = { e => player_data.updateVolumeSong( e.target, false ) }
+                      onChange = { e => player_data.updateVolumeSong( e.target, false, true ) }
+                      onClick = { e => player_data.updateVolumeSong( e.target, true, false ) }
                       type = 'range'
                       min = '0'
                       max = '100'
