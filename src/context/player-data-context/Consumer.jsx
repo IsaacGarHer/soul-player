@@ -29,7 +29,6 @@ const Player = ( ) => (
               id = 'mp3-player'
               autoPlay
               onLoadStart = { e => e.target.volume = player_data.volume_value / 100 }
-              onEnded = { e => player_data.setVolumeValue( e.target.volume ) }
               onEnded = {( ) => player_data.toEnd( ) }
               onTimeUpdate = { e => player_data.updateRangeValue( e.target.currentTime, player_data.listening.duration )}/>
             <div className = 'player-top'>
